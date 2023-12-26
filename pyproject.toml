@@ -4,8 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "onecondition"
-version = "0.1.0"
-description = "An ultra-lightweight package for validating single conditions."
+dynamic = ["version", "description"]
 readme = "README_pypi.md"
 license= {file = "LICENSE"}
 authors = [
