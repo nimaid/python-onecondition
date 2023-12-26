@@ -1,6 +1,6 @@
 """An ultra-lightweight package for validating single conditions."""
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 from dataclasses import dataclass
 from typing import Any
@@ -11,7 +11,7 @@ class Test:
     """A data class containing methods to test various conditions about 1 or more values."""
     @staticmethod
     def none(value: Any) -> bool:
-        """Tests if a value is None.
+        """Test if a value is None.
 
         :param Any value: The value to test.
 
@@ -22,7 +22,7 @@ class Test:
 
     @staticmethod
     def specific_type(value: Any, value_type: type) -> bool:
-        """Tests if a value is a specific type (do not consider inheritance).
+        """Test if a value is a specific type (do not consider inheritance).
 
         :param Any value: The value to test.
         :param type value_type: The type to test the value against.
@@ -34,7 +34,7 @@ class Test:
 
     @staticmethod
     def instance(value: Any, value_type: type) -> bool:
-        """Tests if a value is an instance (the same as or a subclass) of a specific type.
+        """Test if a value is an instance (the same as or a subclass) of a specific type.
 
         :param Any value: The value to test.
         :param type value_type: The type to test the value against.
@@ -46,7 +46,7 @@ class Test:
 
     @staticmethod
     def zero(value: int | float) -> bool:
-        """Tests if a value is exactly equal to 0.
+        """Test if a value is exactly equal to 0.
 
         :param int | float value: The value to test.
 
@@ -57,7 +57,7 @@ class Test:
 
     @staticmethod
     def positive(value: int | float) -> bool:
-        """Tests if a value is positive (non-zero).
+        """Test if a value is positive (non-zero).
 
         :param int | float value: The value to test.
 
@@ -68,7 +68,7 @@ class Test:
 
     @staticmethod
     def negative(value: int | float) -> bool:
-        """Tests if a value is negative (non-zero).
+        """Test if a value is negative (non-zero).
 
         :param int | float value: The value to test.
 
@@ -79,7 +79,7 @@ class Test:
 
     @staticmethod
     def range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> bool:
-        """Tests if a value is within a specified range (inclusive).
+        """Test if a value is within a specified range (inclusive).
 
         :param int | float value: The value to test.
         :param int | float minimum: The minimum value to test against.
@@ -92,7 +92,7 @@ class Test:
 
     @staticmethod
     def range_non_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> bool:
-        """Tests if a value is within a specified range (non-inclusive).
+        """Test if a value is within a specified range (non-inclusive).
 
         :param int | float value: The value to test.
         :param int | float minimum: The minimum value to test against.
@@ -105,7 +105,7 @@ class Test:
 
     @staticmethod
     def eq(first: int | float, second: int | float) -> bool:
-        """Tests if a value is exactly equal to a second value.
+        """Test if a value is exactly equal to a second value.
 
         :param int | float first: The value to test.
         :param int | float second: The value to test against.
@@ -117,7 +117,7 @@ class Test:
 
     @staticmethod
     def gt(first: int | float, second: int | float) -> bool:
-        """Tests if a value is greater than a second value.
+        """Test if a value is greater than a second value.
 
         :param int | float first: The value to test.
         :param int | float second: The value to test against.
@@ -129,7 +129,7 @@ class Test:
 
     @staticmethod
     def lte(first: int | float, second: int | float) -> bool:
-        """Tests if a value is less than or equal to a second value.
+        """Test if a value is less than or equal to a second value.
 
         :param int | float first: The value to test.
         :param int | float second: The value to test against.
@@ -141,7 +141,7 @@ class Test:
 
     @staticmethod
     def lt(first: int | float, second: int | float) -> bool:
-        """Tests if a value is less than a second value.
+        """Test if a value is less than a second value.
 
         :param int | float first: The value to test.
         :param int | float second: The value to test against.
@@ -153,7 +153,7 @@ class Test:
 
     @staticmethod
     def gte(first: int | float, second: int | float) -> bool:
-        """Tests if a value is greater than or equal to a second value.
+        """Test if a value is greater than or equal to a second value.
 
         :param int | float first: The value to test.
         :param int | float second: The value to test against.
@@ -176,22 +176,56 @@ class Validate:
     """A data class containing methods to validate various conditions about 1 or more values."""
     @staticmethod
     def none(value: Any) -> None:
-        if Test.none(value):
+        """Test if a value is None, and if so, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value is not None.
+
+        :rtype: None
+        """
+        if not Test.none(value):
             raise ValidationError(f"Value '{value}' must be None")
 
     @staticmethod
     def not_none(value: Any) -> None:
-        if not Test.none(value):
-            raise ValidationError(f"Value must not be None")
+        """Test if a value is not None, and if it is, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value is None.
+
+        :rtype: None
+        """
+        if Test.none(value):
+            raise ValidationError("Value must not be None")
 
     @staticmethod
     def specific_type(value: Any, value_type: type) -> None:
+        """Test if a value is a specific type (do not consider inheritance), and if so, raise an exception.
+
+        :param Any value: The value to test.
+        :param type value_type: The type to test the value against.
+
+        :raises ValidationError: Raised if the type of the value doesn't exactly match.
+
+        :rtype: None
+        """
         if not Test.specific_type(value, value_type):
             raise ValidationError(f"Value '{value}' must be of type {value_type}, not {type(value)}")
 
     @staticmethod
     def not_specific_type(value: Any, value_type: type) -> None:
-        if Test.type(value, value_type):
+        """Test if a value is a not specific type (do not consider inheritance), and if it is, raise an exception.
+
+        :param Any value: The value to test.
+        :param type value_type: The type to test the value against.
+
+        :raises ValidationError: Raised if the type of the value exactly matches.
+
+        :rtype: None
+        """
+        if Test.specific_type(value, value_type):
             raise ValidationError(f"Value '{value}' must be not of type {value_type}")
 
     @staticmethod
