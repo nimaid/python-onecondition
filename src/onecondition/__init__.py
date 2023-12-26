@@ -176,7 +176,7 @@ class Validate:
     """A data class containing methods to validate various conditions about 1 or more values."""
     @staticmethod
     def none(value: Any) -> None:
-        """Test if a value is None, and if so, raise an exception.
+        """Test if a value is None, and if it is, raise an exception.
 
         :param Any value: The value to test.
 
@@ -202,7 +202,7 @@ class Validate:
 
     @staticmethod
     def specific_type(value: Any, value_type: type) -> None:
-        """Test if a value is a specific type (do not consider inheritance), and if so, raise an exception.
+        """Test if a value is a specific type (do not consider inheritance), and if it is, raise an exception.
 
         :param Any value: The value to test.
         :param type value_type: The type to test the value against.
@@ -230,11 +230,29 @@ class Validate:
 
     @staticmethod
     def instance(value: Any, value_type: type) -> None:
+        """Test if a value is an instance (the same as or a subclass) of a specific type, and if it is, raise an exception.
+
+        :param Any value: The value to test.
+        :param type value_type: The type to test the value against.
+
+        :raises ValidationError: Raised if the value isn't an instance of the type.
+
+        :rtype: None
+        """
         if not Test.instance(value, value_type):
             raise ValidationError(f"Value '{value}' must be an instance of {value_type}, not a {type(value)}")
 
     @staticmethod
     def not_instance(value: Any, value_type: type) -> None:
+        """Test if a value is not an instance (the same as or a subclass) of a specific type, and if it is, raise an exception.
+
+        :param Any value: The value to test.
+        :param type value_type: The type to test the value against.
+
+        :raises ValidationError: Raised if the value is an instance of the type.
+
+        :rtype: None
+        """
         if Test.instance(value, value_type):
             raise ValidationError(f"Value '{value}' must not be an instance of {value_type}")
 
