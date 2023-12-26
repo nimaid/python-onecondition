@@ -1,4 +1,4 @@
-name: python-onecondition
+name: onecondition
 channels:
   - defaults
 dependencies:

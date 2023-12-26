@@ -1,9 +1,14 @@
+"""An ultra-lightweight package for validating single conditions."""
+
+__version__ = "0.1.0"
+
 from dataclasses import dataclass
 from typing import Any
 
 
 @dataclass
 class Test:
+    """A data class containing methods to test various conditions about 1 or more values."""
     @staticmethod
     def none(value: Any) -> bool:
         return value is None
