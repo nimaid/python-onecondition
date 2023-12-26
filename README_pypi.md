@@ -1,8 +1,6 @@
 # 1️⃣ OneCondition
 ### An ultra-lightweight package for validating single conditions.
 
-<p align="center"><img src="https://github.com/nimaid/onecondition/blob/main/docs/example.jpg?raw=true" width="800px" alt="Example image"/></p>
-
 ## Usage In Custom Code
 TODO
 

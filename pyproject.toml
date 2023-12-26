@@ -18,6 +18,7 @@ dependencies = []
 [project.urls]
 homepage = "https://github.com/nimaid/python-onecondition"
 repository = "https://github.com/nimaid/python-onecondition"
+documentation = "https://onecondition.readthedocs.io/en/latest/index.html"
 issues = "https://github.com/nimaid/python-onecondition/issues"
 
 [project.scripts]
