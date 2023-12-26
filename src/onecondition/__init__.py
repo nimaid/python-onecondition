@@ -1,6 +1,6 @@
 """An ultra-lightweight package for validating single conditions."""
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from dataclasses import dataclass
 from typing import Any
