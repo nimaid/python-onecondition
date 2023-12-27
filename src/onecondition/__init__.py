@@ -311,28 +311,68 @@ class Validate:
 
     @staticmethod
     def not_zero(value: int | float) -> None:
+        """Validate that a value is not exactly equal to 0, and if it is, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value is exactly equal to zero.
+
+        :rtype: None
+        """
         if Test.zero(value):
             raise ValidationError(f"Value '{value}' must not be zero")
 
     @staticmethod
     def positive(value: int | float) -> None:
+        """Validate that a value is positive (non-zero), and if it isn't, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value isn't positive (non-zero).
+
+        :rtype: None
+        """
         if not Test.positive(value):
             raise ValidationError(f"Value '{value}' must be positive (non-zero)")
 
     @staticmethod
     def not_positive(value: int | float) -> None:
+        """Validate that a value is not positive (non-zero), and if it is, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value is positive (non-zero).
+
+        :rtype: None
+        """
         if Test.positive(value):
-            raise ValidationError(f"Value '{value}' must not be positive")
+            raise ValidationError(f"Value '{value}' must not be positive (non-zero)")
 
     @staticmethod
     def negative(value: int | float) -> None:
+        """Validate that a value is negative (non-zero), and if it isn't, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value isn't negative (non-zero).
+
+        :rtype: None
+        """
         if not Test.negative(value):
             raise ValidationError(f"Value '{value}' must be negative (non-zero)")
 
     @staticmethod
     def not_negative(value: int | float) -> None:
+        """Validate that a value is not negative (non-zero), and if it is, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value is negative (non-zero).
+
+        :rtype: None
+        """
         if Test.negative(value):
-            raise ValidationError(f"Value '{value}' must not be negative")
+            raise ValidationError(f"Value '{value}' must not be negative (non-zero)")
 
     @staticmethod
     def range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
