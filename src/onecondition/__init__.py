@@ -188,7 +188,7 @@ class Validate:
     """A data class containing methods to validate various conditions about 1 or more values."""
     @staticmethod
     def none(value: Any) -> None:
-        """Test if a value is None, and if it is, raise an exception.
+        """Validate that a value is None, and if it isn't, raise an exception.
 
         :param Any value: The value to test.
 
@@ -201,7 +201,7 @@ class Validate:
 
     @staticmethod
     def not_none(value: Any) -> None:
-        """Test if a value is not None, and if it is, raise an exception.
+        """Validate that a value is not None, and if it is, raise an exception.
 
         :param Any value: The value to test.
 
@@ -214,7 +214,7 @@ class Validate:
 
     @staticmethod
     def same_object(first: Any, second: Any) -> None:
-        """Test if two values are the exact same object in memory (NOT `==`), and they aren't, is, raise an exception.
+        """Validate that two values are the exact same object in memory (NOT `==`), and they aren't, is, raise an exception.
 
         :param Any first: The value to test.
         :param Any second: The value to test against.
@@ -228,7 +228,7 @@ class Validate:
 
     @staticmethod
     def not_same_object(first: Any, second: Any) -> None:
-        """Test if two values aren't the exact same object in memory (NOT `!=`), and they are, is, raise an exception.
+        """Validate that two values aren't the exact same object in memory (NOT `!=`), and they are, is, raise an exception.
 
         :param Any first: The value to test.
         :param Any second: The value to test against.
@@ -242,12 +242,12 @@ class Validate:
 
     @staticmethod
     def specific_type(value: Any, value_type: type) -> None:
-        """Test if a value is a specific type (do not consider inheritance), and if it is, raise an exception.
+        """Validate that a value is a specific type (do not consider inheritance), and if it isn't, raise an exception.
 
         :param Any value: The value to test.
         :param type value_type: The type to test the value against.
 
-        :raises ValidationError: Raised if the type of the value doesn't exactly match.
+        :raises ValidationError: Raised if the type of the value isn't an exact match.
 
         :rtype: None
         """
@@ -256,12 +256,12 @@ class Validate:
 
     @staticmethod
     def not_specific_type(value: Any, value_type: type) -> None:
-        """Test if a value is a not specific type (do not consider inheritance), and if it is, raise an exception.
+        """Validate that a value is a not specific type (do not consider inheritance), and if it is, raise an exception.
 
         :param Any value: The value to test.
         :param type value_type: The type to test the value against.
 
-        :raises ValidationError: Raised if the type of the value exactly matches.
+        :raises ValidationError: Raised if the type of the value is an exact match.
 
         :rtype: None
         """
@@ -270,7 +270,7 @@ class Validate:
 
     @staticmethod
     def instance(value: Any, value_type: type) -> None:
-        """Test if a value is an instance (the same as or a subclass) of a specific type, and if it is, raise an exception.
+        """Validate that a value is an instance (the same as or a subclass) of a specific type, and if it isn't, raise an exception.
 
         :param Any value: The value to test.
         :param type value_type: The type to test the value against.
@@ -284,7 +284,7 @@ class Validate:
 
     @staticmethod
     def not_instance(value: Any, value_type: type) -> None:
-        """Test if a value is not an instance (the same as or a subclass) of a specific type, and if it is, raise an exception.
+        """Validate that a value is not an instance (the same as or a subclass) of a specific type, and if it is, raise an exception.
 
         :param Any value: The value to test.
         :param type value_type: The type to test the value against.
@@ -298,6 +298,14 @@ class Validate:
 
     @staticmethod
     def zero(value: int | float) -> None:
+        """Validate that a value is exactly equal to 0, and if it isn't, raise an exception.
+
+        :param Any value: The value to test.
+
+        :raises ValidationError: Raised if the value isn't exactly equal to zero.
+
+        :rtype: None
+        """
         if not Test.zero(value):
             raise ValidationError(f"Value '{value}' must be zero")
 
