@@ -1,4 +1,45 @@
-"""Contains methods to test various conditions about 1 or more values."""
+"""Contains methods to test various conditions about 1 or more values.
+
+>>> none(None)
+True
+
+>>> class TestError(ValueError):
+...     def __init__(self, message):
+...         super().__init__(message)
+>>> test_error = TestError("Test")
+
+>>> specific_type(test_error, ValueError)
+False
+>>> instance(test_error, ValueError)
+True
+
+>>> zero(0)
+True
+>>> positive(0)
+False
+>>> negative(0)
+False
+
+>>> range_inclusive(0, 0, 1)
+True
+>>> range_non_inclusive(0, 0, 1)
+False
+
+>>> eq("foo", "foo")
+True
+>>> eq(42, -123.45)
+False
+
+>>> gt(4, 2)
+True
+>>> lt(4, 2)
+False
+
+>>> gte(0, 0)
+True
+>>> lte(0, 0)
+True
+"""
 from typing import Any
 
 
@@ -12,7 +53,7 @@ def none(value: Any) -> bool:
 
     >>> none(None)
     True
-    >>> none("A String")
+    >>> none("")
     False
     >>> none(42)
     False
@@ -208,25 +249,6 @@ def gt(first: int | float, second: int | float) -> bool:
     return first > second
 
 
-def lte(first: int | float, second: int | float) -> bool:
-    """Test if a value is less than or equal to a second value.
-
-    :param int | float first: The value to test.
-    :param int | float second: The value to test against.
-
-    :return: The result of the evaluation.
-    :rtype: bool
-
-    >>> lte(-123.45, 0)
-    True
-    >>> lte(0, 0)
-    True
-    >>> lte(42, 0)
-    False
-    """
-    return first <= second
-
-
 def lt(first: int | float, second: int | float) -> bool:
     """Test if a value is less than a second value.
 
@@ -263,3 +285,22 @@ def gte(first: int | float, second: int | float) -> bool:
     True
     """
     return first >= second
+
+
+def lte(first: int | float, second: int | float) -> bool:
+    """Test if a value is less than or equal to a second value.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :return: The result of the evaluation.
+    :rtype: bool
+
+    >>> lte(-123.45, 0)
+    True
+    >>> lte(0, 0)
+    True
+    >>> lte(42, 0)
+    False
+    """
+    return first <= second
