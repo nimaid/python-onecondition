@@ -180,7 +180,7 @@ def eq(first: Any, second: Any) -> bool:
     >>> eq(0, 0)
     True
     >>> eq(42, 0)
-    True
+    False
     >>> eq("foo", "bar")
     False
     >>> eq("foo", "foo")
@@ -197,6 +197,13 @@ def gt(first: int | float, second: int | float) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> gt(-123.45, 0)
+    False
+    >>> gt(0, 0)
+    False
+    >>> gt(42, 0)
+    True
     """
     return first > second
 
@@ -209,6 +216,13 @@ def lte(first: int | float, second: int | float) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> lte(-123.45, 0)
+    True
+    >>> lte(0, 0)
+    True
+    >>> lte(42, 0)
+    False
     """
     return first <= second
 
@@ -221,6 +235,13 @@ def lt(first: int | float, second: int | float) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> lt(-123.45, 0)
+    True
+    >>> lt(0, 0)
+    False
+    >>> lt(42, 0)
+    False
     """
     return first < second
 
@@ -233,5 +254,12 @@ def gte(first: int | float, second: int | float) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> gte(-123.45, 0)
+    False
+    >>> gte(0, 0)
+    True
+    >>> gte(42, 0)
+    True
     """
     return first >= second
