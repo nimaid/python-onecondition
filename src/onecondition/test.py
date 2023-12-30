@@ -9,20 +9,15 @@ def none(value: Any) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> none(None)
+    True
+    >>> none("A String")
+    False
+    >>> none(42)
+    False
     """
     return value is None
-
-
-def same_object(first: Any, second: Any) -> bool:
-    """Test if two values are the exact same object in memory (NOT `==`).
-
-    :param Any first: The value to test.
-    :param Any second: The value to test against.
-
-    :return: The result of the evaluation.
-    :rtype: bool
-    """
-    return first is second
 
 
 def specific_type(value: Any, value_type: type) -> bool:
@@ -33,6 +28,16 @@ def specific_type(value: Any, value_type: type) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> class TestError(ValueError):
+    ...     def __init__(self, message):
+    ...         super().__init__(message)
+    >>> test_error = TestError("Test")
+
+    >>> specific_type(test_error, TestError)
+    True
+    >>> specific_type(test_error, ValueError)
+    False
     """
     return type(value) is value_type
 
@@ -45,6 +50,16 @@ def instance(value: Any, value_type: type) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> class TestError(ValueError):
+    ...     def __init__(self, message):
+    ...         super().__init__(message)
+    >>> test_error = TestError("Test")
+
+    >>> instance(test_error, TestError)
+    True
+    >>> instance(test_error, ValueError)
+    True
     """
     return isinstance(value, value_type)
 

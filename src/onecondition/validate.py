@@ -37,34 +37,6 @@ def not_none(value: Any) -> None:
         raise ValidationError("Value must not be None")
 
 
-def same_object(first: Any, second: Any) -> None:
-    """Validate that two values are the exact same object in memory (NOT `==`), and they aren't, is, raise an exception.
-
-    :param Any first: The value to test.
-    :param Any second: The value to test against.
-
-    :raises ValidationError: Raised if the objects aren't exact same the same object (uses `is`).
-
-    :rtype: None
-    """
-    if not test.same_object(first, second):
-        raise ValidationError(f"Value '{first}' must be the same object as {second}")
-
-
-def not_same_object(first: Any, second: Any) -> None:
-    """Validate that two values aren't the exact same object in memory (NOT `!=`), and they are, is, raise an exception.
-
-    :param Any first: The value to test.
-    :param Any second: The value to test against.
-
-    :raises ValidationError: Raised if the objects are exact same the same object (uses `is`).
-
-    :rtype: None
-    """
-    if test.same_object(first, second):
-        raise ValidationError(f"Value '{first}' must not be the same object as {second}")
-
-
 def specific_type(value: Any, value_type: type) -> None:
     """Validate that a value is a specific type (do not consider inheritance), and if it isn't, raise an exception.
 
