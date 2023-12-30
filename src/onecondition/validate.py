@@ -1,4 +1,24 @@
-"""Contains methods to validate various conditions about 1 or more values."""
+"""Contains methods to validate various conditions about 1 or more values.
+
+>>> none(None)
+>>> not_none("")
+
+>>> class TestError(ValueError):
+...     def __init__(self, message):
+...         super().__init__(message)
+>>> test_error = TestError("Test")
+>>> specific_type(test_error, TestError)
+>>> instance(test_error, ValueError)
+>>> not_specific_type(test_error, ValueError)
+>>> not_instance(test_error, TypeError)
+
+>>> zero(0)
+>>> not_zero(42)
+>>> positive(42)
+>>> not_positive(0)
+>>> negative(-123.45)
+>>> not_negative(0)
+"""
 from typing import Any
 
 from onecondition import test
@@ -19,6 +39,12 @@ def none(value: Any) -> None:
     :raises ValidationError: Raised if the value is not None.
 
     :rtype: None
+
+    >>> none(None)
+    >>> none("")
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value '' must be None
     """
     if not test.none(value):
         raise ValidationError(f"Value '{value}' must be None")
@@ -32,6 +58,12 @@ def not_none(value: Any) -> None:
     :raises ValidationError: Raised if the value is None.
 
     :rtype: None
+
+    >>> not_none("")
+    >>> not_none(None)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value must not be None
     """
     if test.none(value):
         raise ValidationError("Value must not be None")

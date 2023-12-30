@@ -7,7 +7,6 @@ True
 ...     def __init__(self, message):
 ...         super().__init__(message)
 >>> test_error = TestError("Test")
-
 >>> specific_type(test_error, ValueError)
 False
 >>> instance(test_error, ValueError)
