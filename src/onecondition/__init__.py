@@ -3,4 +3,3 @@
 __version__ = "0.2.0"
 
 from onecondition.validate import ValidationError
-#from onecondition import validate, test
