@@ -200,50 +200,144 @@ def not_negative(value: int | float) -> None:
 
 
 def range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
+    """Validate that a value is within a specified range (inclusive), and if it isn't, raise an exception.
+
+    :param Any value: The value to test.
+    :param int | float minimum: The minimum value to test against.
+    :param int | float maximum: The maximum value to test against.
+
+    :raises ValidationError: Raised if the value isn't within the specified range (inclusive).
+
+    :rtype: None
+    """
     if not test.range_inclusive(value, minimum, maximum):
         raise ValidationError(f"Value '{value}' must be between {minimum} and {maximum} (inclusive)")
 
 
 def not_range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
+    """Validate that a value is not within a specified range (inclusive), and if it is, raise an exception.
+
+    :param Any value: The value to test.
+    :param int | float minimum: The minimum value to test against.
+    :param int | float maximum: The maximum value to test against.
+
+    :raises ValidationError: Raised if the value is within the specified range (inclusive).
+
+    :rtype: None
+    """
     if test.range_inclusive(value, minimum, maximum):
         raise ValidationError(f"Value '{value}' must not be between {minimum} and {maximum} (inclusive)")
 
 
 def range_non_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
+    """Validate that a value is within a specified range (non-inclusive), and if it isn't, raise an exception.
+
+    :param Any value: The value to test.
+    :param int | float minimum: The minimum value to test against.
+    :param int | float maximum: The maximum value to test against.
+
+    :raises ValidationError: Raised if the value isn't within the specified range (non-inclusive).
+
+    :rtype: None
+    """
     if not test.range_non_inclusive(value, minimum, maximum):
         raise ValidationError(f"Value '{value}' must be between {minimum} and {maximum} (non-inclusive)")
 
 
 def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
+    """Validate that a value is not within a specified range (non-inclusive), and if it is, raise an exception.
+
+    :param Any value: The value to test.
+    :param int | float minimum: The minimum value to test against.
+    :param int | float maximum: The maximum value to test against.
+
+    :raises ValidationError: Raised if the value is within the specified range (non-inclusive).
+
+    :rtype: None
+    """
     if test.range_non_inclusive(value, minimum, maximum):
         raise ValidationError(f"Value '{value}' must not be between {minimum} and {maximum} (non-inclusive)")
 
 
 def eq(first: int | float, second: int | float) -> None:
+    """Validate that a value is exactly equal to a second value, and if it isn't, raise an exception.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :raises ValidationError: Raised if the value isn't exactly equal to a second value.
+
+    :rtype: None
+    """
     if not test.eq(first, second):
         raise ValidationError(f"Value '{first}' must be equal to '{second}'")
 
 
 def neq(first: int | float, second: int | float) -> None:
+    """Validate that a value is not exactly equal to a second value, and if it is, raise an exception.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :raises ValidationError: Raised if the value is exactly equal to a second value.
+
+    :rtype: None
+    """
     if test.eq(first, second):
         raise ValidationError(f"Value '{first}' must not be equal to '{second}'")
 
 
 def gt(first: int | float, second: int | float) -> None:
+    """Validate that a value is greater than a second value, and if it isn't, raise an exception.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :raises ValidationError: Raised if the value isn't greater than a second value.
+
+    :rtype: None
+    """
     if not test.gt(first, second):
         raise ValidationError(f"Value '{first}' must be greater than '{second}'")
 
 
 def lte(first: int | float, second: int | float) -> None:
+    """Validate that a value is less than or equal to a second value, and if it isn't, raise an exception.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :raises ValidationError: Raised if the value isn't less than or equal to a second value.
+
+    :rtype: None
+    """
     if not test.lte(first, second):
         raise ValidationError(f"Value '{first}' must be less than or equal to '{second}'")
 
 
 def lt(first: int | float, second: int | float) -> None:
+    """Validate that a value is less than a second value, and if it isn't, raise an exception.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :raises ValidationError: Raised if the value isn't less than a second value.
+
+    :rtype: None
+    """
     if not test.lt(first, second):
         raise ValidationError(f"Value '{first}' must be less than '{second}'")
 
 
 def gte(first: int | float, second: int | float) -> None:
+    """Validate that a value is greater than or equal to a second value, and if it isn't, raise an exception.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :raises ValidationError: Raised if the value isn't greater than or equal to a second value.
+
+    :rtype: None
+    """
     if not test.gte(first, second):
         raise ValidationError(f"Value '{first}' must be greater than or equal to '{second}'")
