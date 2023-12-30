@@ -18,6 +18,18 @@
 >>> not_positive(0)
 >>> negative(-123.45)
 >>> not_negative(0)
+
+>>> range_inclusive(0, 0, 1)
+>>> not_range_inclusive(2, 0, 1)
+>>> range_non_inclusive(0.5, 0, 1)
+>>> not_range_non_inclusive(0, 0, 1)
+
+>>> eq(42, 42)
+>>> neq(42, -123.45)
+>>> gt(42, -123.45)
+>>> lt(-123.45, 42)
+>>> gte(0, 0)
+>>> lte(0, 0)
 """
 from typing import Any
 
@@ -25,7 +37,13 @@ from onecondition import test
 
 
 class ValidationError(ValueError):
-    """A subclass of ValueError, this is raised any time a validation check fails."""
+    """A subclass of ValueError, this is raised any time a validation check fails.
+
+    >>> raise ValidationError("Test")
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Test
+    """
     def __init__(self, message: str = None):
         self.message = message
         super().__init__(message)
@@ -47,7 +65,7 @@ def none(value: Any) -> None:
     validate.ValidationError: Value '' must be None
     """
     if not test.none(value):
-        raise ValidationError(f"Value '{value}' must be None")
+        raise ValidationError(f"Value '{repr(value)}' must be None")
 
 
 def not_none(value: Any) -> None:
@@ -78,9 +96,19 @@ def specific_type(value: Any, value_type: type) -> None:
     :raises ValidationError: Raised if the type of the value isn't an exact match.
 
     :rtype: None
+
+    >>> class TestError(ValueError):
+    ...     def __init__(self, message):
+    ...         super().__init__(message)
+    >>> test_error = TestError("Test")
+    >>> specific_type(test_error, TestError)
+    >>> specific_type(test_error, ValueError)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value 'TestError('Test')' must be of type <class 'ValueError'>, not <class 'validate.TestError'>
     """
     if not test.specific_type(value, value_type):
-        raise ValidationError(f"Value '{value}' must be of type {value_type}, not {type(value)}")
+        raise ValidationError(f"Value '{repr(value)}' must be of type {value_type}, not {type(value)}")
 
 
 def not_specific_type(value: Any, value_type: type) -> None:
@@ -92,9 +120,19 @@ def not_specific_type(value: Any, value_type: type) -> None:
     :raises ValidationError: Raised if the type of the value is an exact match.
 
     :rtype: None
+
+    >>> class TestError(ValueError):
+    ...     def __init__(self, message):
+    ...         super().__init__(message)
+    >>> test_error = TestError("Test")
+    >>> not_specific_type(test_error, ValueError)
+    >>> not_specific_type(test_error, TestError)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value 'TestError('Test')' must be not of type <class 'validate.TestError'>
     """
     if test.specific_type(value, value_type):
-        raise ValidationError(f"Value '{value}' must be not of type {value_type}")
+        raise ValidationError(f"Value '{repr(value)}' must be not of type {value_type}")
 
 
 def instance(value: Any, value_type: type) -> None:
@@ -108,7 +146,7 @@ def instance(value: Any, value_type: type) -> None:
     :rtype: None
     """
     if not test.instance(value, value_type):
-        raise ValidationError(f"Value '{value}' must be an instance of {value_type}, not a {type(value)}")
+        raise ValidationError(f"Value '{repr(value)}' must be an instance of {value_type}, not a {type(value)}")
 
 
 def not_instance(value: Any, value_type: type) -> None:
@@ -122,7 +160,7 @@ def not_instance(value: Any, value_type: type) -> None:
     :rtype: None
     """
     if test.instance(value, value_type):
-        raise ValidationError(f"Value '{value}' must not be an instance of {value_type}")
+        raise ValidationError(f"Value '{repr(value)}' must not be an instance of {value_type}")
 
 
 def zero(value: int | float) -> None:
@@ -135,7 +173,7 @@ def zero(value: int | float) -> None:
     :rtype: None
     """
     if not test.zero(value):
-        raise ValidationError(f"Value '{value}' must be zero")
+        raise ValidationError(f"Value '{repr(value)}' must be zero")
 
 
 def not_zero(value: int | float) -> None:
@@ -148,7 +186,7 @@ def not_zero(value: int | float) -> None:
     :rtype: None
     """
     if test.zero(value):
-        raise ValidationError(f"Value '{value}' must not be zero")
+        raise ValidationError(f"Value '{repr(value)}' must not be zero")
 
 
 def positive(value: int | float) -> None:
@@ -161,7 +199,7 @@ def positive(value: int | float) -> None:
     :rtype: None
     """
     if not test.positive(value):
-        raise ValidationError(f"Value '{value}' must be positive (non-zero)")
+        raise ValidationError(f"Value '{repr(value)}' must be positive (non-zero)")
 
 
 def not_positive(value: int | float) -> None:
@@ -174,7 +212,7 @@ def not_positive(value: int | float) -> None:
     :rtype: None
     """
     if test.positive(value):
-        raise ValidationError(f"Value '{value}' must not be positive (non-zero)")
+        raise ValidationError(f"Value '{repr(value)}' must not be positive (non-zero)")
 
 
 def negative(value: int | float) -> None:
@@ -187,7 +225,7 @@ def negative(value: int | float) -> None:
     :rtype: None
     """
     if not test.negative(value):
-        raise ValidationError(f"Value '{value}' must be negative (non-zero)")
+        raise ValidationError(f"Value '{repr(value)}' must be negative (non-zero)")
 
 
 def not_negative(value: int | float) -> None:
@@ -200,7 +238,7 @@ def not_negative(value: int | float) -> None:
     :rtype: None
     """
     if test.negative(value):
-        raise ValidationError(f"Value '{value}' must not be negative (non-zero)")
+        raise ValidationError(f"Value '{repr(value)}' must not be negative (non-zero)")
 
 
 def range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -215,7 +253,7 @@ def range_inclusive(value: int | float, minimum: int | float, maximum: int | flo
     :rtype: None
     """
     if not test.range_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{value}' must be between {minimum} and {maximum} (inclusive)")
+        raise ValidationError(f"Value '{repr(value)}' must be between {minimum} and {maximum} (inclusive)")
 
 
 def not_range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -230,7 +268,7 @@ def not_range_inclusive(value: int | float, minimum: int | float, maximum: int |
     :rtype: None
     """
     if test.range_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{value}' must not be between {minimum} and {maximum} (inclusive)")
+        raise ValidationError(f"Value '{repr(value)}' must not be between {minimum} and {maximum} (inclusive)")
 
 
 def range_non_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -245,7 +283,7 @@ def range_non_inclusive(value: int | float, minimum: int | float, maximum: int |
     :rtype: None
     """
     if not test.range_non_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{value}' must be between {minimum} and {maximum} (non-inclusive)")
+        raise ValidationError(f"Value '{repr(value)}' must be between {minimum} and {maximum} (non-inclusive)")
 
 
 def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -260,7 +298,7 @@ def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: i
     :rtype: None
     """
     if test.range_non_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{value}' must not be between {minimum} and {maximum} (non-inclusive)")
+        raise ValidationError(f"Value '{repr(value)}' must not be between {minimum} and {maximum} (non-inclusive)")
 
 
 def eq(first: Any, second: Any) -> None:
@@ -274,7 +312,7 @@ def eq(first: Any, second: Any) -> None:
     :rtype: None
     """
     if not test.eq(first, second):
-        raise ValidationError(f"Value '{first}' must be equal to '{second}'")
+        raise ValidationError(f"Value '{repr(first)}' must be equal to '{second}'")
 
 
 def neq(first: Any, second: Any) -> None:
@@ -288,7 +326,7 @@ def neq(first: Any, second: Any) -> None:
     :rtype: None
     """
     if test.eq(first, second):
-        raise ValidationError(f"Value '{first}' must not be equal to '{second}'")
+        raise ValidationError(f"Value '{repr(first)}' must not be equal to '{second}'")
 
 
 def gt(first: int | float, second: int | float) -> None:
@@ -302,21 +340,7 @@ def gt(first: int | float, second: int | float) -> None:
     :rtype: None
     """
     if not test.gt(first, second):
-        raise ValidationError(f"Value '{first}' must be greater than '{second}'")
-
-
-def lte(first: int | float, second: int | float) -> None:
-    """Validate that a value is less than or equal to a second value, and if it isn't, raise an exception.
-
-    :param int | float first: The value to test.
-    :param int | float second: The value to test against.
-
-    :raises ValidationError: Raised if the value isn't less than or equal to a second value.
-
-    :rtype: None
-    """
-    if not test.lte(first, second):
-        raise ValidationError(f"Value '{first}' must be less than or equal to '{second}'")
+        raise ValidationError(f"Value '{repr(first)}' must be greater than '{second}'")
 
 
 def lt(first: int | float, second: int | float) -> None:
@@ -330,7 +354,7 @@ def lt(first: int | float, second: int | float) -> None:
     :rtype: None
     """
     if not test.lt(first, second):
-        raise ValidationError(f"Value '{first}' must be less than '{second}'")
+        raise ValidationError(f"Value '{repr(first)}' must be less than '{second}'")
 
 
 def gte(first: int | float, second: int | float) -> None:
@@ -344,4 +368,18 @@ def gte(first: int | float, second: int | float) -> None:
     :rtype: None
     """
     if not test.gte(first, second):
-        raise ValidationError(f"Value '{first}' must be greater than or equal to '{second}'")
+        raise ValidationError(f"Value '{repr(first)}' must be greater than or equal to '{second}'")
+
+
+def lte(first: int | float, second: int | float) -> None:
+    """Validate that a value is less than or equal to a second value, and if it isn't, raise an exception.
+
+    :param int | float first: The value to test.
+    :param int | float second: The value to test against.
+
+    :raises ValidationError: Raised if the value isn't less than or equal to a second value.
+
+    :rtype: None
+    """
+    if not test.lte(first, second):
+        raise ValidationError(f"Value '{repr(first)}' must be less than or equal to '{second}'")
