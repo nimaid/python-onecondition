@@ -62,10 +62,10 @@ def none(value: Any) -> None:
     >>> none("")
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value '' must be None
+    validate.ValidationError: Value `''` must be None
     """
     if not test.none(value):
-        raise ValidationError(f"Value '{repr(value)}' must be None")
+        raise ValidationError(f"Value `{repr(value)}` must be None")
 
 
 def not_none(value: Any) -> None:
@@ -105,10 +105,10 @@ def specific_type(value: Any, value_type: type) -> None:
     >>> specific_type(test_error, ValueError)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value 'TestError('Test')' must be of type <class 'ValueError'>, not <class 'validate.TestError'>
+    validate.ValidationError: Value `TestError('Test')` must be of type <class 'ValueError'>, not <class 'validate.TestError'>
     """
     if not test.specific_type(value, value_type):
-        raise ValidationError(f"Value '{repr(value)}' must be of type {value_type}, not {type(value)}")
+        raise ValidationError(f"Value `{repr(value)}` must be of type {value_type}, not {type(value)}")
 
 
 def not_specific_type(value: Any, value_type: type) -> None:
@@ -129,10 +129,10 @@ def not_specific_type(value: Any, value_type: type) -> None:
     >>> not_specific_type(test_error, TestError)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value 'TestError('Test')' must be not of type <class 'validate.TestError'>
+    validate.ValidationError: Value `TestError('Test')` must be not of type <class 'validate.TestError'>
     """
     if test.specific_type(value, value_type):
-        raise ValidationError(f"Value '{repr(value)}' must be not of type {value_type}")
+        raise ValidationError(f"Value `{repr(value)}` must be not of type {value_type}")
 
 
 def instance(value: Any, value_type: type) -> None:
@@ -144,9 +144,19 @@ def instance(value: Any, value_type: type) -> None:
     :raises ValidationError: Raised if the value isn't an instance of the type.
 
     :rtype: None
+
+    >>> class TestError(ValueError):
+    ...     def __init__(self, message):
+    ...         super().__init__(message)
+    >>> test_error = TestError("Test")
+    >>> instance(test_error, ValueError)
+    >>> instance(test_error, TypeError)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `TestError('Test')` must be an instance of <class 'TypeError'>, not a <class 'validate.TestError'>
     """
     if not test.instance(value, value_type):
-        raise ValidationError(f"Value '{repr(value)}' must be an instance of {value_type}, not a {type(value)}")
+        raise ValidationError(f"Value `{repr(value)}` must be an instance of {value_type}, not a {type(value)}")
 
 
 def not_instance(value: Any, value_type: type) -> None:
@@ -158,9 +168,19 @@ def not_instance(value: Any, value_type: type) -> None:
     :raises ValidationError: Raised if the value is an instance of the type.
 
     :rtype: None
+
+    >>> class TestError(ValueError):
+    ...     def __init__(self, message):
+    ...         super().__init__(message)
+    >>> test_error = TestError("Test")
+    >>> not_instance(test_error, TypeError)
+    >>> not_instance(test_error, ValueError)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `TestError('Test')` must not be an instance of <class 'ValueError'>
     """
     if test.instance(value, value_type):
-        raise ValidationError(f"Value '{repr(value)}' must not be an instance of {value_type}")
+        raise ValidationError(f"Value `{repr(value)}` must not be an instance of {value_type}")
 
 
 def zero(value: int | float) -> None:
@@ -173,7 +193,7 @@ def zero(value: int | float) -> None:
     :rtype: None
     """
     if not test.zero(value):
-        raise ValidationError(f"Value '{repr(value)}' must be zero")
+        raise ValidationError(f"Value `{repr(value)}` must be zero")
 
 
 def not_zero(value: int | float) -> None:
@@ -186,7 +206,7 @@ def not_zero(value: int | float) -> None:
     :rtype: None
     """
     if test.zero(value):
-        raise ValidationError(f"Value '{repr(value)}' must not be zero")
+        raise ValidationError(f"Value `{repr(value)}` must not be zero")
 
 
 def positive(value: int | float) -> None:
@@ -199,7 +219,7 @@ def positive(value: int | float) -> None:
     :rtype: None
     """
     if not test.positive(value):
-        raise ValidationError(f"Value '{repr(value)}' must be positive (non-zero)")
+        raise ValidationError(f"Value `{repr(value)}` must be positive (non-zero)")
 
 
 def not_positive(value: int | float) -> None:
@@ -212,7 +232,7 @@ def not_positive(value: int | float) -> None:
     :rtype: None
     """
     if test.positive(value):
-        raise ValidationError(f"Value '{repr(value)}' must not be positive (non-zero)")
+        raise ValidationError(f"Value `{repr(value)}` must not be positive (non-zero)")
 
 
 def negative(value: int | float) -> None:
@@ -225,7 +245,7 @@ def negative(value: int | float) -> None:
     :rtype: None
     """
     if not test.negative(value):
-        raise ValidationError(f"Value '{repr(value)}' must be negative (non-zero)")
+        raise ValidationError(f"Value `{repr(value)}` must be negative (non-zero)")
 
 
 def not_negative(value: int | float) -> None:
@@ -238,7 +258,7 @@ def not_negative(value: int | float) -> None:
     :rtype: None
     """
     if test.negative(value):
-        raise ValidationError(f"Value '{repr(value)}' must not be negative (non-zero)")
+        raise ValidationError(f"Value `{repr(value)}` must not be negative (non-zero)")
 
 
 def range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -253,7 +273,7 @@ def range_inclusive(value: int | float, minimum: int | float, maximum: int | flo
     :rtype: None
     """
     if not test.range_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{repr(value)}' must be between {minimum} and {maximum} (inclusive)")
+        raise ValidationError(f"Value `{repr(value)}` must be between {minimum} and {maximum} (inclusive)")
 
 
 def not_range_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -268,7 +288,7 @@ def not_range_inclusive(value: int | float, minimum: int | float, maximum: int |
     :rtype: None
     """
     if test.range_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{repr(value)}' must not be between {minimum} and {maximum} (inclusive)")
+        raise ValidationError(f"Value `{repr(value)}` must not be between {minimum} and {maximum} (inclusive)")
 
 
 def range_non_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -283,7 +303,7 @@ def range_non_inclusive(value: int | float, minimum: int | float, maximum: int |
     :rtype: None
     """
     if not test.range_non_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{repr(value)}' must be between {minimum} and {maximum} (non-inclusive)")
+        raise ValidationError(f"Value `{repr(value)}` must be between {minimum} and {maximum} (non-inclusive)")
 
 
 def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: int | float) -> None:
@@ -298,7 +318,7 @@ def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: i
     :rtype: None
     """
     if test.range_non_inclusive(value, minimum, maximum):
-        raise ValidationError(f"Value '{repr(value)}' must not be between {minimum} and {maximum} (non-inclusive)")
+        raise ValidationError(f"Value `{repr(value)}` must not be between {minimum} and {maximum} (non-inclusive)")
 
 
 def eq(first: Any, second: Any) -> None:
