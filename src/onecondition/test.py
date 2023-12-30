@@ -71,6 +71,13 @@ def zero(value: int | float) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> zero(42)
+    False
+    >>> zero(0)
+    True
+    >>> zero(-123.45)
+    False
     """
     return value == 0
 
@@ -82,6 +89,13 @@ def positive(value: int | float) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> positive(42)
+    True
+    >>> positive(0)
+    False
+    >>> positive(-123.45)
+    False
     """
     return value > 0
 
@@ -93,6 +107,13 @@ def negative(value: int | float) -> bool:
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> negative(42)
+    False
+    >>> negative(0)
+    False
+    >>> negative(-123.45)
+    True
     """
     return value < 0
 
@@ -106,6 +127,17 @@ def range_inclusive(value: int | float, minimum: int | float, maximum: int | flo
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> range_inclusive(-123.45, 0, 1)
+    False
+    >>> range_inclusive(0, 0, 1)
+    True
+    >>> range_inclusive(0.5, 0, 1)
+    True
+    >>> range_inclusive(1, 0, 1)
+    True
+    >>> range_inclusive(42, 0, 1)
+    False
     """
     return minimum <= value <= maximum
 
@@ -119,18 +151,40 @@ def range_non_inclusive(value: int | float, minimum: int | float, maximum: int |
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> range_non_inclusive(-123.45, 0, 1)
+    False
+    >>> range_non_inclusive(0, 0, 1)
+    False
+    >>> range_non_inclusive(0.5, 0, 1)
+    True
+    >>> range_non_inclusive(1, 0, 1)
+    False
+    >>> range_non_inclusive(42, 0, 1)
+    False
     """
     return minimum < value < maximum
 
 
-def eq(first: int | float, second: int | float) -> bool:
+def eq(first: Any, second: Any) -> bool:
     """Test if a value is exactly equal to a second value.
 
-    :param int | float first: The value to test.
-    :param int | float second: The value to test against.
+    :param Any first: The value to test.
+    :param Any second: The value to test against.
 
     :return: The result of the evaluation.
     :rtype: bool
+
+    >>> eq(-123.45, 0)
+    False
+    >>> eq(0, 0)
+    True
+    >>> eq(42, 0)
+    True
+    >>> eq("foo", "bar")
+    False
+    >>> eq("foo", "foo")
+    True
     """
     return first == second
 

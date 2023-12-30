@@ -231,11 +231,11 @@ def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: i
         raise ValidationError(f"Value '{value}' must not be between {minimum} and {maximum} (non-inclusive)")
 
 
-def eq(first: int | float, second: int | float) -> None:
+def eq(first: Any, second: Any) -> None:
     """Validate that a value is exactly equal to a second value, and if it isn't, raise an exception.
 
-    :param int | float first: The value to test.
-    :param int | float second: The value to test against.
+    :param Any first: The value to test.
+    :param Any second: The value to test against.
 
     :raises ValidationError: Raised if the value isn't exactly equal to a second value.
 
@@ -245,11 +245,11 @@ def eq(first: int | float, second: int | float) -> None:
         raise ValidationError(f"Value '{first}' must be equal to '{second}'")
 
 
-def neq(first: int | float, second: int | float) -> None:
+def neq(first: Any, second: Any) -> None:
     """Validate that a value is not exactly equal to a second value, and if it is, raise an exception.
 
-    :param int | float first: The value to test.
-    :param int | float second: The value to test against.
+    :param Any first: The value to test.
+    :param Any second: The value to test against.
 
     :raises ValidationError: Raised if the value is exactly equal to a second value.
 
