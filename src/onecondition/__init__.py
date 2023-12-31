@@ -11,3 +11,5 @@ onecondition.validate.ValidationError: Value `0` must be between 0 and 1 (non-in
 __version__ = "0.3.0"
 
 from onecondition.validate import ValidationError
+
+# TODO: https://docs.python.org/2/library/doctest.html#unittest-api
