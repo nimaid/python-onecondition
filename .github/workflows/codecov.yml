@@ -5,8 +5,8 @@ on:
     branches:
       - main
 jobs:
-  Build-PyPI:
-    name: Run Codecov
+  Run-Tests:
+    name: Run Tests
     runs-on: ubuntu-latest
     permissions:
       id-token: write
