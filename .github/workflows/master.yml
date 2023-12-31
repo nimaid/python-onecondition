@@ -9,7 +9,7 @@ jobs:
     name: Build and Upload to PyPI
     runs-on: ubuntu-latest
     environment:
-      name: pypi
+      name: deploy-master
       url: https://pypi.org/p/onecondition
     permissions:
       id-token: write
