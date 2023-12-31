@@ -11,6 +11,14 @@ jobs:
     permissions:
       id-token: write
     steps:
+      - run: echo "This job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "Running on a ${{ runner.os }} server."
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+      - name: Install Python Tools
+        run: python3 -m pip install coverage
+      - name: Run Coverage and Unit Tests
+        run: coverage run -m unittest discover tests
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
