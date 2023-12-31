@@ -2,10 +2,12 @@
 ### An ultra-lightweight package for validating single conditions.
 [![Python Version](https://img.shields.io/pypi/pyversions/onecondition?logo=python&logoColor=white)](https://pypi.org/project/onecondition/)
 [![PyPI Version](https://img.shields.io/pypi/v/onecondition)](https://pypi.org/project/onecondition/)
+
 [![GitHub Build](https://img.shields.io/github/actions/workflow/status/nimaid/python-onecondition/publish-pypi-release.yml?logo=GitHub)](https://github.com/nimaid/python-onecondition/actions/workflows/publish-pypi-release.yml)
 [![Coveralls Coverage](https://img.shields.io/coverallsCoverage/github/nimaid/python-onecondition?logo=coveralls)](https://coveralls.io/github/nimaid/python-onecondition)
 [![Codecov Coverage](https://codecov.io/gh/nimaid/python-onecondition/graph/badge.svg?token=IG0GJD2GIO)](https://codecov.io/gh/nimaid/python-onecondition)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6016e7276903495c9d4a6f0dc89d2904)](https://app.codacy.com/gh/nimaid/python-onecondition/dashboard)
+
 [![License](https://img.shields.io/pypi/l/onecondition)](https://github.com/nimaid/python-onecondition/raw/main/LICENSE)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/onecondition.svg?label=pypi%20downloads&logo=PyPI&logoColor=white)](https://pypi.org/project/onecondition/)
 
