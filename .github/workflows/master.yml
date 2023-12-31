@@ -19,13 +19,13 @@ jobs:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
       - name: Install Python Tools
-        run: python3 -m pip install build twine coverage
+        run: python3 -m pip install build twine coverage pytest
       - name: Build with Python
         run: python3 -m build
       - name: Install Local Package
         run: python3 -m pip install -e .
       - name: Run Coverage and Unit Tests
-        run: coverage run -m unittest discover tests
+        run: coverage run -m pytest
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:

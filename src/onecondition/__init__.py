@@ -9,7 +9,7 @@
     onecondition.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
 """
 
-__version__ = "1.1.5"
+__version__ = "1.1.6"
 
 # TODO: Move to pytest
 # TODO: phmdoctest / phmutest, reformat readmes to not use REPL

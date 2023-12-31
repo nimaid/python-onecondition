@@ -7,8 +7,8 @@ set TESTDIR=%ORIGDIR%\tests
 
 call conda activate %ENVNAME%
 
-echo Running doctests...
-python -m unittest discover %TESTDIR%
+echo Running tests...
+python -m pytest
 if errorlevel 1 goto ERROR
 
 goto DONE
