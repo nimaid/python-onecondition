@@ -5,7 +5,7 @@
 
 [![GitHub Build](https://img.shields.io/github/actions/workflow/status/nimaid/python-onecondition/master.yml?logo=GitHub)](https://github.com/nimaid/python-onecondition/actions/workflows/master.yml)
 [![Coveralls Coverage](https://img.shields.io/coverallsCoverage/github/nimaid/python-onecondition?logo=coveralls)](https://coveralls.io/github/nimaid/python-onecondition)
-[![Codecov Coverage](https://codecov.io/gh/nimaid/python-onecondition/graph/badge.svg?token=IG0GJD2GIO)](https://codecov.io/gh/nimaid/python-onecondition)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/nimaid/python-onecondition?logo=codecov&logoColor=white)](https://codecov.io/gh/nimaid/python-onecondition)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6016e7276903495c9d4a6f0dc89d2904)](https://app.codacy.com/gh/nimaid/python-onecondition/dashboard)
 
 [![License](https://img.shields.io/pypi/l/onecondition?logo=opensourceinitiative&logoColor=white)](https://github.com/nimaid/python-onecondition/raw/main/LICENSE)
@@ -24,7 +24,10 @@ def inverse(value):
     
     return 1 / value
 ```
-This works for very simple cases, but what if we wanted to format more information into the error messages? What if we want a custom error type to represent specifically a validation error? What if we need to do 20, or 200 validations, instead of 2? You can start to see how quickly your boilerplate code for validation could clutter up your code.
+This works for very simple cases, but what if we wanted to format more information into the error messages?
+What if we want a custom error type to represent specifically a validation error?
+What if we need to do 20, or 200 validations, instead of 2?
+You can start to see how quickly your boilerplate for validation could clutter up your code.
 
 `onecondition` aims to solve this issue with a simple design philosophy:
 
