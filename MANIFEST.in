@@ -1,1 +1,1 @@
-include src/onecondition/*.yml src/onecondition/*.py
+include src/onecondition/*.py

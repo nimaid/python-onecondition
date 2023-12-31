@@ -36,6 +36,7 @@ This works for very simple cases, but what if we wanted to format more informati
 <!--
 ```doctest
 >>> import onecondition as oc
+>>> import onecondition.validate
 
 >>> def inverse(value):
 ...     oc.validate.instance(value, (int, float))
@@ -60,6 +61,7 @@ The most common usage of `onecondition` is to validate that the parameters passe
 The `validate` submodule provides a [large number of functions](https://onecondition.readthedocs.io/en/latest/autoapi/onecondition/validate/index.html#functions) that allow validating many aspects about a value.
 ```python
 import onecondition as oc
+import onecondition.validate
 
 def inverse(value):
     # Validate that the input is a positive number

@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   Deploy-Master:
-    name: Build and Upload to PyPI
+    name: Test, Build, and Upload
     runs-on: ubuntu-latest
     environment:
       name: deploy-master
