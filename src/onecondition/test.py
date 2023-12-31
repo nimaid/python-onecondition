@@ -39,6 +39,7 @@ True
 >>> lte(0, 0)
 True
 """
+from types import UnionType
 from typing import Any
 
 
@@ -60,7 +61,7 @@ def none(value: Any) -> bool:
     return value is None
 
 
-def specific_type(value: Any, value_type: type) -> bool:
+def specific_type(value: Any, value_type: type | UnionType | tuple[type | UnionType | tuple[Any, ...], ...]) -> bool:
     """Test if a value is a specific type (do not consider inheritance).
 
     :param Any value: The value to test.
@@ -78,11 +79,13 @@ def specific_type(value: Any, value_type: type) -> bool:
     True
     >>> specific_type(test_error, ValueError)
     False
+    >>> specific_type(test_error, (int, float))
+    False
     """
     return type(value) is value_type
 
 
-def instance(value: Any, value_type: type) -> bool:
+def instance(value: Any, value_type: type | UnionType | tuple[type | UnionType | tuple[Any, ...], ...]) -> bool:
     """Test if a value is an instance (the same as or a subclass) of a specific type.
 
     :param Any value: The value to test.
@@ -100,6 +103,8 @@ def instance(value: Any, value_type: type) -> bool:
     True
     >>> instance(test_error, ValueError)
     True
+    >>> instance(test_error, (int, float))
+    False
     """
     return isinstance(value, value_type)
 

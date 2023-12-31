@@ -33,6 +33,7 @@
 """
 from onecondition import ValidationError, test
 
+from types import UnionType
 from typing import Any
 
 
@@ -74,7 +75,7 @@ def not_none(value: Any) -> None:
         raise ValidationError(value, "not be None")
 
 
-def specific_type(value: Any, value_type: type) -> None:
+def specific_type(value: Any, value_type: type | UnionType | tuple[type | UnionType | tuple[Any, ...], ...]) -> None:
     """Validate that a value is a specific type (do not consider inheritance), and if it isn't, raise an exception.
 
     :param Any value: The value to test.
@@ -93,12 +94,16 @@ def specific_type(value: Any, value_type: type) -> None:
     Traceback (most recent call last):
         ...
     onecondition.ValidationError: Value `TestError('Test')` must be of type <class 'ValueError'>, not <class 'onecondition.validate.TestError'>
+    >>> specific_type(test_error, (int, float))
+    Traceback (most recent call last):
+        ...
+    onecondition.ValidationError: Value `TestError('Test')` must be of type (<class 'int'>, <class 'float'>), not <class 'onecondition.validate.TestError'>
     """
     if not test.specific_type(value, value_type):
         raise ValidationError(value, f"be of type {value_type}, not {type(value)}")
 
 
-def not_specific_type(value: Any, value_type: type) -> None:
+def not_specific_type(value: Any, value_type: type | UnionType | tuple[type | UnionType | tuple[Any, ...], ...]) -> None:
     """Validate that a value is a not specific type (do not consider inheritance), and if it is, raise an exception.
 
     :param Any value: The value to test.
@@ -117,12 +122,13 @@ def not_specific_type(value: Any, value_type: type) -> None:
     Traceback (most recent call last):
         ...
     onecondition.ValidationError: Value `TestError('Test')` must be not of type <class 'onecondition.validate.TestError'>
+    >>> not_specific_type(test_error, (int, float))
     """
     if test.specific_type(value, value_type):
         raise ValidationError(value, f"be not of type {value_type}")
 
 
-def instance(value: Any, value_type: type) -> None:
+def instance(value: Any, value_type: type | UnionType | tuple[type | UnionType | tuple[Any, ...], ...]) -> None:
     """Validate that a value is an instance (the same as or a subclass) of a specific type, and if it isn't, raise an exception.
 
     :param Any value: The value to test.
@@ -141,12 +147,16 @@ def instance(value: Any, value_type: type) -> None:
     Traceback (most recent call last):
         ...
     onecondition.ValidationError: Value `TestError('Test')` must be an instance of <class 'TypeError'>, not a <class 'onecondition.validate.TestError'>
+    >>> instance(test_error, (int, float))
+    Traceback (most recent call last):
+        ...
+    onecondition.ValidationError: Value `TestError('Test')` must be an instance of (<class 'int'>, <class 'float'>), not a <class 'onecondition.validate.TestError'>
     """
     if not test.instance(value, value_type):
         raise ValidationError(value, f"be an instance of {value_type}, not a {type(value)}")
 
 
-def not_instance(value: Any, value_type: type) -> None:
+def not_instance(value: Any, value_type: type | UnionType | tuple[type | UnionType | tuple[Any, ...], ...]) -> None:
     """Validate that a value is not an instance (the same as or a subclass) of a specific type, and if it is, raise an exception.
 
     :param Any value: The value to test.
@@ -165,6 +175,7 @@ def not_instance(value: Any, value_type: type) -> None:
     Traceback (most recent call last):
         ...
     onecondition.ValidationError: Value `TestError('Test')` must not be an instance of <class 'ValueError'>
+    >>> not_instance(test_error, (int, float))
     """
     if test.instance(value, value_type):
         raise ValidationError(value, f"not be an instance of {value_type}")
