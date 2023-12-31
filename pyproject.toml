@@ -4,9 +4,10 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "onecondition"
+requires-python = ">3.7"
 dynamic = ["version", "description"]
 readme = "README_pypi.md"
-license= {file = "LICENSE"}
+license= "LICENSE"
 authors = [
     {name = "Ella Jameson", email = "ellagjameson@gmail.com"}
 ]

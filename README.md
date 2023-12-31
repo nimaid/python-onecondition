@@ -1,5 +1,10 @@
 # 1️⃣ OneCondition
 ### An ultra-lightweight package for validating single conditions in Python.
+[![Python Version](https://img.shields.io/pypi/pyversions/onecondition)](https://pypi.org/project/onecondition/)
+[![PyPI Version](https://img.shields.io/pypi/v/onecondition)](https://pypi.org/project/onecondition/)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6016e7276903495c9d4a6f0dc89d2904)](https://app.codacy.com/gh/nimaid/python-onecondition/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![PyPI - License](https://img.shields.io/pypi/l/onecondition)](LICENSE)
+
 
 <p align="center"><a href="https://pypi.org/project/onecondition/"><img src="https://pypi.org/static/images/logo-large.9f732b5f.svg" width="200px" alt="onecondition on Pypi"></a></p>
 
