@@ -9,7 +9,7 @@
     onecondition.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
 """
 
-__version__ = "1.0.8"
+__version__ = "1.0.9"
 
 # TODO: is_in
 
