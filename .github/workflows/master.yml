@@ -1,11 +1,11 @@
-name: PyPI Release
-run-name:  Build and Upload to PyPI (${{ github.actor }})
+name: Deploy Master
+run-name:  Test, Build, and Upload (${{ github.actor }})
 on:
   push:
     branches:
       - main
 jobs:
-  Build-PyPI:
+  Deploy-Master:
     name: Build and Upload to PyPI
     runs-on: ubuntu-latest
     environment:
@@ -19,8 +19,18 @@ jobs:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
       - name: Install Python Tools
-        run: python3 -m pip install build twine
+        run: python3 -m pip install build twine coverage
       - name: Build with Python
         run: python3 -m build
+      - name: Install Local Package
+        run: python3 -m pip install -e .
+      - name: Run Coverage and Unit Tests
+        run: coverage run -m unittest discover tests
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage reports to Coveralls
+        uses: coverallsapp/github-action@v2
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@v1.8.11
