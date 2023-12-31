@@ -1,5 +1,5 @@
 name: Codecov
-run-name:  Run Codecov (${{ github.actor }})
+run-name:  Run Tests (${{ github.actor }})
 on:
   push:
     branches:
