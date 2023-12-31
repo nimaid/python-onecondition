@@ -1,40 +1,41 @@
 """Contains methods to validate various conditions about 1 or more values.
 
->>> none(None)
->>> not_none("")
+:Example:
+    >>> none(None)
+    >>> not_none("")
 
->>> class TestError(ValueError):
-...     def __init__(self, message):
-...         super().__init__(message)
->>> test_error = TestError("Test")
->>> specific_type(test_error, TestError)
->>> instance(test_error, ValueError)
->>> not_specific_type(test_error, ValueError)
->>> not_instance(test_error, TypeError)
+    >>> class TestError(ValueError):
+    ...     def __init__(self, message):
+    ...         super().__init__(message)
+    >>> test_error = TestError("Test")
+    >>> specific_type(test_error, TestError)
+    >>> instance(test_error, ValueError)
+    >>> not_specific_type(test_error, ValueError)
+    >>> not_instance(test_error, TypeError)
 
->>> zero(0)
->>> not_zero(42)
->>> positive(42)
->>> not_positive(0)
->>> negative(-123.45)
->>> not_negative(0)
+    >>> zero(0)
+    >>> not_zero(42)
+    >>> positive(42)
+    >>> not_positive(0)
+    >>> negative(-123.45)
+    >>> not_negative(0)
 
->>> range_inclusive(0, 0, 1)
->>> not_range_inclusive(2, 0, 1)
->>> range_non_inclusive(0.5, 0, 1)
->>> not_range_non_inclusive(0, 0, 1)
+    >>> range_inclusive(0, 0, 1)
+    >>> not_range_inclusive(2, 0, 1)
+    >>> range_non_inclusive(0.5, 0, 1)
+    >>> not_range_non_inclusive(0, 0, 1)
 
->>> eq(42, 42)
->>> neq(42, -123.45)
->>> gt(42, -123.45)
->>> lt(-123.45, 42)
->>> gte(0, 0)
->>> lte(0, 0)
+    >>> eq(42, 42)
+    >>> neq(42, -123.45)
+    >>> gt(42, -123.45)
+    >>> lt(-123.45, 42)
+    >>> gte(0, 0)
+    >>> lte(0, 0)
 """
-from onecondition import ValidationError, test
-
 from types import UnionType
 from typing import Any
+
+from onecondition import ValidationError, test
 
 
 def none(value: Any) -> None:
@@ -46,11 +47,12 @@ def none(value: Any) -> None:
 
     :rtype: None
 
-    >>> none(None)
-    >>> none("")
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `''` must be None
+    :Example:
+        >>> none(None)
+        >>> none("")
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `''` must be None
     """
     if not test.none(value):
         raise ValidationError(value, "be None")
@@ -65,11 +67,12 @@ def not_none(value: Any) -> None:
 
     :rtype: None
 
-    >>> not_none("")
-    >>> not_none(None)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `None` must not be None
+    :Example:
+        >>> not_none("")
+        >>> not_none(None)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `None` must not be None
     """
     if test.none(value):
         raise ValidationError(value, "not be None")
@@ -85,19 +88,20 @@ def specific_type(value: Any, value_type: type | UnionType | tuple[type | UnionT
 
     :rtype: None
 
-    >>> class TestError(ValueError):
-    ...     def __init__(self, message):
-    ...         super().__init__(message)
-    >>> test_error = TestError("Test")
-    >>> specific_type(test_error, TestError)
-    >>> specific_type(test_error, ValueError)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `TestError('Test')` must be of type <class 'ValueError'>, not <class 'onecondition.validate.TestError'>
-    >>> specific_type(test_error, (int, float))
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `TestError('Test')` must be of type (<class 'int'>, <class 'float'>), not <class 'onecondition.validate.TestError'>
+    :Example:
+        >>> class TestError(ValueError):
+        ...     def __init__(self, message):
+        ...         super().__init__(message)
+        >>> test_error = TestError("Test")
+        >>> specific_type(test_error, TestError)
+        >>> specific_type(test_error, ValueError)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `TestError('Test')` must be of type <class 'ValueError'>, not <class 'onecondition.validate.TestError'>
+        >>> specific_type(test_error, (int, float))
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `TestError('Test')` must be of type (<class 'int'>, <class 'float'>), not <class 'onecondition.validate.TestError'>
     """
     if not test.specific_type(value, value_type):
         raise ValidationError(value, f"be of type {value_type}, not {type(value)}")
@@ -113,16 +117,17 @@ def not_specific_type(value: Any, value_type: type | UnionType | tuple[type | Un
 
     :rtype: None
 
-    >>> class TestError(ValueError):
-    ...     def __init__(self, message):
-    ...         super().__init__(message)
-    >>> test_error = TestError("Test")
-    >>> not_specific_type(test_error, ValueError)
-    >>> not_specific_type(test_error, TestError)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `TestError('Test')` must be not of type <class 'onecondition.validate.TestError'>
-    >>> not_specific_type(test_error, (int, float))
+    :Example:
+        >>> class TestError(ValueError):
+        ...     def __init__(self, message):
+        ...         super().__init__(message)
+        >>> test_error = TestError("Test")
+        >>> not_specific_type(test_error, ValueError)
+        >>> not_specific_type(test_error, TestError)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `TestError('Test')` must be not of type <class 'onecondition.validate.TestError'>
+        >>> not_specific_type(test_error, (int, float))
     """
     if test.specific_type(value, value_type):
         raise ValidationError(value, f"be not of type {value_type}")
@@ -138,19 +143,20 @@ def instance(value: Any, value_type: type | UnionType | tuple[type | UnionType |
 
     :rtype: None
 
-    >>> class TestError(ValueError):
-    ...     def __init__(self, message):
-    ...         super().__init__(message)
-    >>> test_error = TestError("Test")
-    >>> instance(test_error, ValueError)
-    >>> instance(test_error, TypeError)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `TestError('Test')` must be an instance of <class 'TypeError'>, not a <class 'onecondition.validate.TestError'>
-    >>> instance(test_error, (int, float))
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `TestError('Test')` must be an instance of (<class 'int'>, <class 'float'>), not a <class 'onecondition.validate.TestError'>
+    :Example:
+        >>> class TestError(ValueError):
+        ...     def __init__(self, message):
+        ...         super().__init__(message)
+        >>> test_error = TestError("Test")
+        >>> instance(test_error, ValueError)
+        >>> instance(test_error, TypeError)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `TestError('Test')` must be an instance of <class 'TypeError'>, not a <class 'onecondition.validate.TestError'>
+        >>> instance(test_error, (int, float))
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `TestError('Test')` must be an instance of (<class 'int'>, <class 'float'>), not a <class 'onecondition.validate.TestError'>
     """
     if not test.instance(value, value_type):
         raise ValidationError(value, f"be an instance of {value_type}, not a {type(value)}")
@@ -166,16 +172,17 @@ def not_instance(value: Any, value_type: type | UnionType | tuple[type | UnionTy
 
     :rtype: None
 
-    >>> class TestError(ValueError):
-    ...     def __init__(self, message):
-    ...         super().__init__(message)
-    >>> test_error = TestError("Test")
-    >>> not_instance(test_error, TypeError)
-    >>> not_instance(test_error, ValueError)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `TestError('Test')` must not be an instance of <class 'ValueError'>
-    >>> not_instance(test_error, (int, float))
+    :Example:
+        >>> class TestError(ValueError):
+        ...     def __init__(self, message):
+        ...         super().__init__(message)
+        >>> test_error = TestError("Test")
+        >>> not_instance(test_error, TypeError)
+        >>> not_instance(test_error, ValueError)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `TestError('Test')` must not be an instance of <class 'ValueError'>
+        >>> not_instance(test_error, (int, float))
     """
     if test.instance(value, value_type):
         raise ValidationError(value, f"not be an instance of {value_type}")
@@ -190,11 +197,12 @@ def zero(value: int | float) -> None:
 
     :rtype: None
 
-    >>> zero(0)
-    >>> zero(42)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must be zero
+    :Example:
+        >>> zero(0)
+        >>> zero(42)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must be zero
     """
     if not test.zero(value):
         raise ValidationError(value, "be zero")
@@ -209,11 +217,12 @@ def not_zero(value: int | float) -> None:
 
     :rtype: None
 
-    >>> not_zero(42)
-    >>> not_zero(0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0` must not be zero
+    :Example:
+        >>> not_zero(42)
+        >>> not_zero(0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must not be zero
     """
     if test.zero(value):
         raise ValidationError(value, "not be zero")
@@ -228,15 +237,16 @@ def positive(value: int | float) -> None:
 
     :rtype: None
 
-    >>> positive(42)
-    >>> positive(0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0` must be positive (non-zero)
-    >>> positive(-123.45)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `-123.45` must be positive (non-zero)
+    :Example:
+        >>> positive(42)
+        >>> positive(0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must be positive (non-zero)
+        >>> positive(-123.45)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `-123.45` must be positive (non-zero)
     """
     if not test.positive(value):
         raise ValidationError(value, "be positive (non-zero)")
@@ -251,12 +261,13 @@ def not_positive(value: int | float) -> None:
 
     :rtype: None
 
-    >>> not_positive(42)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must not be positive (non-zero)
-    >>> not_positive(0)
-    >>> not_positive(-123.45)
+    :Example:
+        >>> not_positive(42)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must not be positive (non-zero)
+        >>> not_positive(0)
+        >>> not_positive(-123.45)
     """
     if test.positive(value):
         raise ValidationError(value, "not be positive (non-zero)")
@@ -271,15 +282,16 @@ def negative(value: int | float) -> None:
 
     :rtype: None
 
-    >>> negative(-123.45)
-    >>> negative(0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0` must be negative (non-zero)
-    >>> negative(42)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must be negative (non-zero)
+    :Example:
+        >>> negative(-123.45)
+        >>> negative(0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must be negative (non-zero)
+        >>> negative(42)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must be negative (non-zero)
     """
     if not test.negative(value):
         raise ValidationError(value, "be negative (non-zero)")
@@ -294,12 +306,13 @@ def not_negative(value: int | float) -> None:
 
     :rtype: None
 
-    >>> not_negative(-123.45)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `-123.45` must not be negative (non-zero)
-    >>> not_negative(0)
-    >>> not_negative(42)
+    :Example:
+        >>> not_negative(-123.45)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `-123.45` must not be negative (non-zero)
+        >>> not_negative(0)
+        >>> not_negative(42)
     """
     if test.negative(value):
         raise ValidationError(value, "not be negative (non-zero)")
@@ -316,12 +329,13 @@ def range_inclusive(value: int | float, minimum: int | float, maximum: int | flo
 
     :rtype: None
 
-    >>> range_inclusive(0, 0, 1)
-    >>> range_inclusive(1, 0, 1)
-    >>> range_inclusive(42, 0, 1)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must be between 0 and 1 (inclusive)
+    :Example:
+        >>> range_inclusive(0, 0, 1)
+        >>> range_inclusive(1, 0, 1)
+        >>> range_inclusive(42, 0, 1)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must be between 0 and 1 (inclusive)
     """
     if not test.range_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"be between {minimum} and {maximum} (inclusive)")
@@ -338,15 +352,16 @@ def not_range_inclusive(value: int | float, minimum: int | float, maximum: int |
 
     :rtype: None
 
-    >>> not_range_inclusive(0, 0, 1)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0` must not be between 0 and 1 (inclusive)
-    >>> not_range_inclusive(1, 0, 1)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `1` must not be between 0 and 1 (inclusive)
-    >>> not_range_inclusive(42, 0, 1)
+    :Example:
+        >>> not_range_inclusive(0, 0, 1)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must not be between 0 and 1 (inclusive)
+        >>> not_range_inclusive(1, 0, 1)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `1` must not be between 0 and 1 (inclusive)
+        >>> not_range_inclusive(42, 0, 1)
     """
     if test.range_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"not be between {minimum} and {maximum} (inclusive)")
@@ -363,15 +378,16 @@ def range_non_inclusive(value: int | float, minimum: int | float, maximum: int |
 
     :rtype: None
 
-    >>> range_non_inclusive(0.5, 0, 1)
-    >>> range_non_inclusive(0, 0, 1)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
-    >>> range_non_inclusive(42, 0, 1)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must be between 0 and 1 (non-inclusive)
+    :Example:
+        >>> range_non_inclusive(0.5, 0, 1)
+        >>> range_non_inclusive(0, 0, 1)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
+        >>> range_non_inclusive(42, 0, 1)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must be between 0 and 1 (non-inclusive)
     """
     if not test.range_non_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"be between {minimum} and {maximum} (non-inclusive)")
@@ -388,12 +404,13 @@ def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: i
 
     :rtype: None
 
-    >>> not_range_non_inclusive(0.5, 0, 1)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0.5` must not be between 0 and 1 (non-inclusive)
-    >>> not_range_non_inclusive(0, 0, 1)
-    >>> not_range_non_inclusive(42, 0, 1)
+    :Example:
+        >>> not_range_non_inclusive(0.5, 0, 1)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0.5` must not be between 0 and 1 (non-inclusive)
+        >>> not_range_non_inclusive(0, 0, 1)
+        >>> not_range_non_inclusive(42, 0, 1)
     """
     if test.range_non_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"not be between {minimum} and {maximum} (non-inclusive)")
@@ -409,12 +426,13 @@ def eq(first: Any, second: Any) -> None:
 
     :rtype: None
 
-    >>> eq("foo", "foo")
-    >>> eq(42, 42)
-    >>> eq(-123.45, 0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `-123.45` must be equal to `0`
+    :Example:
+        >>> eq("foo", "foo")
+        >>> eq(42, 42)
+        >>> eq(-123.45, 0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `-123.45` must be equal to `0`
     """
     if not test.eq(first, second):
         raise ValidationError(first, f"be equal to `{repr(second)}`")
@@ -430,15 +448,16 @@ def neq(first: Any, second: Any) -> None:
 
     :rtype: None
 
-    >>> neq("foo", "foo")
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `'foo'` must not be equal to `'foo'`
-    >>> neq(42, 42)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must not be equal to `42`
-    >>> neq(-123.45, 0)
+    :Example:
+        >>> neq("foo", "foo")
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `'foo'` must not be equal to `'foo'`
+        >>> neq(42, 42)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must not be equal to `42`
+        >>> neq(-123.45, 0)
     """
     if test.eq(first, second):
         raise ValidationError(first, f"not be equal to `{repr(second)}`")
@@ -454,15 +473,16 @@ def gt(first: int | float, second: int | float) -> None:
 
     :rtype: None
 
-    >>> gt(42, 0)
-    >>> gt(0, 0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0` must be greater than `0`
-    >>> gt(-123.45, 0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `-123.45` must be greater than `0`
+    :Example:
+        >>> gt(42, 0)
+        >>> gt(0, 0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must be greater than `0`
+        >>> gt(-123.45, 0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `-123.45` must be greater than `0`
     """
     if not test.gt(first, second):
         raise ValidationError(first, f"be greater than `{second}`")
@@ -478,15 +498,16 @@ def lt(first: int | float, second: int | float) -> None:
 
     :rtype: None
 
-    >>> lt(42, 0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must be less than `0`
-    >>> lt(0, 0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `0` must be less than `0`
-    >>> lt(-123.45, 0)
+    :Example:
+        >>> lt(42, 0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must be less than `0`
+        >>> lt(0, 0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must be less than `0`
+        >>> lt(-123.45, 0)
     """
     if not test.lt(first, second):
         raise ValidationError(first, f"be less than `{second}`")
@@ -502,12 +523,13 @@ def gte(first: int | float, second: int | float) -> None:
 
     :rtype: None
 
-    >>> gte(42, 0)
-    >>> gte(0, 0)
-    >>> gte(-123.45, 0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `-123.45` must be greater than or equal to `0`
+    :Example:
+        >>> gte(42, 0)
+        >>> gte(0, 0)
+        >>> gte(-123.45, 0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `-123.45` must be greater than or equal to `0`
     """
     if not test.gte(first, second):
         raise ValidationError(first, f"be greater than or equal to `{second}`")
@@ -523,12 +545,13 @@ def lte(first: int | float, second: int | float) -> None:
 
     :rtype: None
 
-    >>> lte(42, 0)
-    Traceback (most recent call last):
-        ...
-    onecondition.ValidationError: Value `42` must be less than or equal to `0`
-    >>> lte(0, 0)
-    >>> lte(-123.45, 0)
+    :Example:
+        >>> lte(42, 0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `42` must be less than or equal to `0`
+        >>> lte(0, 0)
+        >>> lte(-123.45, 0)
     """
     if not test.lte(first, second):
         raise ValidationError(first, f"be less than or equal to `{second}`")
