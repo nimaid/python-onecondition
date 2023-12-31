@@ -1,5 +1,5 @@
 # 1️⃣ OneCondition
-### An ultra-lightweight package for validating single conditions in Python.
+### An ultra-lightweight package for validating single conditions.
 [![Python Version](https://img.shields.io/pypi/pyversions/onecondition?logo=python&logoColor=white)](https://pypi.org/project/onecondition/)
 [![PyPI Version](https://img.shields.io/pypi/v/onecondition)](https://pypi.org/project/onecondition/)
 
@@ -10,8 +10,6 @@
 
 [![License](https://img.shields.io/pypi/l/onecondition)](https://github.com/nimaid/python-onecondition/raw/main/LICENSE)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/onecondition.svg?label=pypi%20downloads&logo=PyPI&logoColor=white)](https://pypi.org/project/onecondition/)
-
-<p align="center"><a href="https://pypi.org/project/onecondition/"><img src="https://pypi.org/static/images/logo-large.9f732b5f.svg" width="200px" alt="onecondition on Pypi"></a></p>
 
 ## Usage
 ```doctest
