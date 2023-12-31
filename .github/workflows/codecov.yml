@@ -1,0 +1,17 @@
+name: Codecov
+run-name:  Run Codecov (${{ github.actor }})
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Build-PyPI:
+    name: Run Codecov
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
