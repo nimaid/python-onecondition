@@ -1,3 +1,6 @@
+[metadata]
+license = "GPL 3"
+
 [build-system]
 requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
@@ -7,7 +10,7 @@ name = "onecondition"
 requires-python = ">3.7"
 dynamic = ["version", "description"]
 readme = "README_pypi.md"
-license= "LICENSE"
+license= {file = "LICENSE"}
 authors = [
     {name = "Ella Jameson", email = "ellagjameson@gmail.com"}
 ]
