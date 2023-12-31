@@ -31,30 +31,9 @@
 >>> gte(0, 0)
 >>> lte(0, 0)
 """
+from onecondition import ValidationError, test
+
 from typing import Any
-
-from onecondition import test
-
-
-class ValidationError(ValueError):
-    """A subclass of ValueError, this is raised any time a validation check fails.
-
-    >>> raise ValidationError(42, "be the answer to life, the universe, and everything")
-    Traceback (most recent call last):
-        ...
-    validate.ValidationError: Value `42` must be the answer to life, the universe, and everything
-    """
-    def __init__(
-            self,
-            value: Any,
-            condition: str,
-            message_format: str = "Value `{value_repr}` must {condition}"
-    ):
-        message = message_format.format(
-            value=value,
-            value_repr=repr(value),
-            condition=condition)
-        super().__init__(message)
 
 
 def none(value: Any) -> None:
@@ -70,7 +49,7 @@ def none(value: Any) -> None:
     >>> none("")
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `''` must be None
+    onecondition.ValidationError: Value `''` must be None
     """
     if not test.none(value):
         raise ValidationError(value, "be None")
@@ -89,7 +68,7 @@ def not_none(value: Any) -> None:
     >>> not_none(None)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `None` must not be None
+    onecondition.ValidationError: Value `None` must not be None
     """
     if test.none(value):
         raise ValidationError(value, "not be None")
@@ -113,7 +92,7 @@ def specific_type(value: Any, value_type: type) -> None:
     >>> specific_type(test_error, ValueError)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `TestError('Test')` must be of type <class 'ValueError'>, not <class 'validate.TestError'>
+    onecondition.ValidationError: Value `TestError('Test')` must be of type <class 'ValueError'>, not <class 'onecondition.validate.TestError'>
     """
     if not test.specific_type(value, value_type):
         raise ValidationError(value, f"be of type {value_type}, not {type(value)}")
@@ -137,7 +116,7 @@ def not_specific_type(value: Any, value_type: type) -> None:
     >>> not_specific_type(test_error, TestError)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `TestError('Test')` must be not of type <class 'validate.TestError'>
+    onecondition.ValidationError: Value `TestError('Test')` must be not of type <class 'onecondition.validate.TestError'>
     """
     if test.specific_type(value, value_type):
         raise ValidationError(value, f"be not of type {value_type}")
@@ -161,7 +140,7 @@ def instance(value: Any, value_type: type) -> None:
     >>> instance(test_error, TypeError)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `TestError('Test')` must be an instance of <class 'TypeError'>, not a <class 'validate.TestError'>
+    onecondition.ValidationError: Value `TestError('Test')` must be an instance of <class 'TypeError'>, not a <class 'onecondition.validate.TestError'>
     """
     if not test.instance(value, value_type):
         raise ValidationError(value, f"be an instance of {value_type}, not a {type(value)}")
@@ -185,7 +164,7 @@ def not_instance(value: Any, value_type: type) -> None:
     >>> not_instance(test_error, ValueError)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `TestError('Test')` must not be an instance of <class 'ValueError'>
+    onecondition.ValidationError: Value `TestError('Test')` must not be an instance of <class 'ValueError'>
     """
     if test.instance(value, value_type):
         raise ValidationError(value, f"not be an instance of {value_type}")
@@ -204,7 +183,7 @@ def zero(value: int | float) -> None:
     >>> zero(42)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must be zero
+    onecondition.ValidationError: Value `42` must be zero
     """
     if not test.zero(value):
         raise ValidationError(value, "be zero")
@@ -223,7 +202,7 @@ def not_zero(value: int | float) -> None:
     >>> not_zero(0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0` must not be zero
+    onecondition.ValidationError: Value `0` must not be zero
     """
     if test.zero(value):
         raise ValidationError(value, "not be zero")
@@ -242,11 +221,11 @@ def positive(value: int | float) -> None:
     >>> positive(0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0` must be positive (non-zero)
+    onecondition.ValidationError: Value `0` must be positive (non-zero)
     >>> positive(-123.45)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `-123.45` must be positive (non-zero)
+    onecondition.ValidationError: Value `-123.45` must be positive (non-zero)
     """
     if not test.positive(value):
         raise ValidationError(value, "be positive (non-zero)")
@@ -264,7 +243,7 @@ def not_positive(value: int | float) -> None:
     >>> not_positive(42)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must not be positive (non-zero)
+    onecondition.ValidationError: Value `42` must not be positive (non-zero)
     >>> not_positive(0)
     >>> not_positive(-123.45)
     """
@@ -285,11 +264,11 @@ def negative(value: int | float) -> None:
     >>> negative(0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0` must be negative (non-zero)
+    onecondition.ValidationError: Value `0` must be negative (non-zero)
     >>> negative(42)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must be negative (non-zero)
+    onecondition.ValidationError: Value `42` must be negative (non-zero)
     """
     if not test.negative(value):
         raise ValidationError(value, "be negative (non-zero)")
@@ -307,7 +286,7 @@ def not_negative(value: int | float) -> None:
     >>> not_negative(-123.45)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `-123.45` must not be negative (non-zero)
+    onecondition.ValidationError: Value `-123.45` must not be negative (non-zero)
     >>> not_negative(0)
     >>> not_negative(42)
     """
@@ -331,7 +310,7 @@ def range_inclusive(value: int | float, minimum: int | float, maximum: int | flo
     >>> range_inclusive(42, 0, 1)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must be between 0 and 1 (inclusive)
+    onecondition.ValidationError: Value `42` must be between 0 and 1 (inclusive)
     """
     if not test.range_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"be between {minimum} and {maximum} (inclusive)")
@@ -351,11 +330,11 @@ def not_range_inclusive(value: int | float, minimum: int | float, maximum: int |
     >>> not_range_inclusive(0, 0, 1)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0` must not be between 0 and 1 (inclusive)
+    onecondition.ValidationError: Value `0` must not be between 0 and 1 (inclusive)
     >>> not_range_inclusive(1, 0, 1)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `1` must not be between 0 and 1 (inclusive)
+    onecondition.ValidationError: Value `1` must not be between 0 and 1 (inclusive)
     >>> not_range_inclusive(42, 0, 1)
     """
     if test.range_inclusive(value, minimum, maximum):
@@ -377,11 +356,11 @@ def range_non_inclusive(value: int | float, minimum: int | float, maximum: int |
     >>> range_non_inclusive(0, 0, 1)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
+    onecondition.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
     >>> range_non_inclusive(42, 0, 1)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must be between 0 and 1 (non-inclusive)
+    onecondition.ValidationError: Value `42` must be between 0 and 1 (non-inclusive)
     """
     if not test.range_non_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"be between {minimum} and {maximum} (non-inclusive)")
@@ -401,7 +380,7 @@ def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: i
     >>> not_range_non_inclusive(0.5, 0, 1)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0.5` must not be between 0 and 1 (non-inclusive)
+    onecondition.ValidationError: Value `0.5` must not be between 0 and 1 (non-inclusive)
     >>> not_range_non_inclusive(0, 0, 1)
     >>> not_range_non_inclusive(42, 0, 1)
     """
@@ -424,7 +403,7 @@ def eq(first: Any, second: Any) -> None:
     >>> eq(-123.45, 0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `-123.45` must be equal to `0`
+    onecondition.ValidationError: Value `-123.45` must be equal to `0`
     """
     if not test.eq(first, second):
         raise ValidationError(first, f"be equal to `{repr(second)}`")
@@ -443,11 +422,11 @@ def neq(first: Any, second: Any) -> None:
     >>> neq("foo", "foo")
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `'foo'` must not be equal to `'foo'`
+    onecondition.ValidationError: Value `'foo'` must not be equal to `'foo'`
     >>> neq(42, 42)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must not be equal to `42`
+    onecondition.ValidationError: Value `42` must not be equal to `42`
     >>> neq(-123.45, 0)
     """
     if test.eq(first, second):
@@ -468,11 +447,11 @@ def gt(first: int | float, second: int | float) -> None:
     >>> gt(0, 0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0` must be greater than `0`
+    onecondition.ValidationError: Value `0` must be greater than `0`
     >>> gt(-123.45, 0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `-123.45` must be greater than `0`
+    onecondition.ValidationError: Value `-123.45` must be greater than `0`
     """
     if not test.gt(first, second):
         raise ValidationError(first, f"be greater than `{second}`")
@@ -491,11 +470,11 @@ def lt(first: int | float, second: int | float) -> None:
     >>> lt(42, 0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must be less than `0`
+    onecondition.ValidationError: Value `42` must be less than `0`
     >>> lt(0, 0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `0` must be less than `0`
+    onecondition.ValidationError: Value `0` must be less than `0`
     >>> lt(-123.45, 0)
     """
     if not test.lt(first, second):
@@ -517,7 +496,7 @@ def gte(first: int | float, second: int | float) -> None:
     >>> gte(-123.45, 0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `-123.45` must be greater than or equal to `0`
+    onecondition.ValidationError: Value `-123.45` must be greater than or equal to `0`
     """
     if not test.gte(first, second):
         raise ValidationError(first, f"be greater than or equal to `{second}`")
@@ -536,7 +515,7 @@ def lte(first: int | float, second: int | float) -> None:
     >>> lte(42, 0)
     Traceback (most recent call last):
         ...
-    validate.ValidationError: Value `42` must be less than or equal to `0`
+    onecondition.ValidationError: Value `42` must be less than or equal to `0`
     >>> lte(0, 0)
     >>> lte(-123.45, 0)
     """
