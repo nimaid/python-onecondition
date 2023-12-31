@@ -237,6 +237,16 @@ def positive(value: int | float) -> None:
     :raises ValidationError: Raised if the value isn't positive (non-zero).
 
     :rtype: None
+
+    >>> positive(42)
+    >>> positive(0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `0` must be positive (non-zero)
+    >>> positive(-123.45)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `-123.45` must be positive (non-zero)
     """
     if not test.positive(value):
         raise ValidationError(value, "be positive (non-zero)")
@@ -250,6 +260,13 @@ def not_positive(value: int | float) -> None:
     :raises ValidationError: Raised if the value is positive (non-zero).
 
     :rtype: None
+
+    >>> not_positive(42)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `42` must not be positive (non-zero)
+    >>> not_positive(0)
+    >>> not_positive(-123.45)
     """
     if test.positive(value):
         raise ValidationError(value, "not be positive (non-zero)")
@@ -263,6 +280,16 @@ def negative(value: int | float) -> None:
     :raises ValidationError: Raised if the value isn't negative (non-zero).
 
     :rtype: None
+
+    >>> negative(-123.45)
+    >>> negative(0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `0` must be negative (non-zero)
+    >>> negative(42)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `42` must be negative (non-zero)
     """
     if not test.negative(value):
         raise ValidationError(value, "be negative (non-zero)")
@@ -276,6 +303,13 @@ def not_negative(value: int | float) -> None:
     :raises ValidationError: Raised if the value is negative (non-zero).
 
     :rtype: None
+
+    >>> not_negative(-123.45)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `-123.45` must not be negative (non-zero)
+    >>> not_negative(0)
+    >>> not_negative(42)
     """
     if test.negative(value):
         raise ValidationError(value, "not be negative (non-zero)")
@@ -291,6 +325,13 @@ def range_inclusive(value: int | float, minimum: int | float, maximum: int | flo
     :raises ValidationError: Raised if the value isn't within the specified range (inclusive).
 
     :rtype: None
+
+    >>> range_inclusive(0, 0, 1)
+    >>> range_inclusive(1, 0, 1)
+    >>> range_inclusive(42, 0, 1)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `42` must be between 0 and 1 (inclusive)
     """
     if not test.range_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"be between {minimum} and {maximum} (inclusive)")
@@ -306,6 +347,16 @@ def not_range_inclusive(value: int | float, minimum: int | float, maximum: int |
     :raises ValidationError: Raised if the value is within the specified range (inclusive).
 
     :rtype: None
+
+    >>> not_range_inclusive(0, 0, 1)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `0` must not be between 0 and 1 (inclusive)
+    >>> not_range_inclusive(1, 0, 1)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `1` must not be between 0 and 1 (inclusive)
+    >>> not_range_inclusive(42, 0, 1)
     """
     if test.range_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"not be between {minimum} and {maximum} (inclusive)")
@@ -321,6 +372,16 @@ def range_non_inclusive(value: int | float, minimum: int | float, maximum: int |
     :raises ValidationError: Raised if the value isn't within the specified range (non-inclusive).
 
     :rtype: None
+
+    >>> range_non_inclusive(0.5, 0, 1)
+    >>> range_non_inclusive(0, 0, 1)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
+    >>> range_non_inclusive(42, 0, 1)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `42` must be between 0 and 1 (non-inclusive)
     """
     if not test.range_non_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"be between {minimum} and {maximum} (non-inclusive)")
@@ -336,6 +397,13 @@ def not_range_non_inclusive(value: int | float, minimum: int | float, maximum: i
     :raises ValidationError: Raised if the value is within the specified range (non-inclusive).
 
     :rtype: None
+
+    >>> not_range_non_inclusive(0.5, 0, 1)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `0.5` must not be between 0 and 1 (non-inclusive)
+    >>> not_range_non_inclusive(0, 0, 1)
+    >>> not_range_non_inclusive(42, 0, 1)
     """
     if test.range_non_inclusive(value, minimum, maximum):
         raise ValidationError(value, f"not be between {minimum} and {maximum} (non-inclusive)")
