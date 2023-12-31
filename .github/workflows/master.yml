@@ -19,7 +19,7 @@ jobs:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
       - name: Install Python Tools
-        run: python3 -m pip install build twine coverage pytest
+        run: python3 -m pip install build twine coverage pytest pytest-codeblocks
       - name: Build with Python
         run: python3 -m build
       - name: Install Local Package
