@@ -418,9 +418,16 @@ def eq(first: Any, second: Any) -> None:
     :raises ValidationError: Raised if the value isn't exactly equal to a second value.
 
     :rtype: None
+
+    >>> eq("foo", "foo")
+    >>> eq(42, 42)
+    >>> eq(-123.45, 0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `-123.45` must be equal to `0`
     """
     if not test.eq(first, second):
-        raise ValidationError(first, f"be equal to '{second}'")
+        raise ValidationError(first, f"be equal to `{repr(second)}`")
 
 
 def neq(first: Any, second: Any) -> None:
@@ -432,9 +439,19 @@ def neq(first: Any, second: Any) -> None:
     :raises ValidationError: Raised if the value is exactly equal to a second value.
 
     :rtype: None
+
+    >>> neq("foo", "foo")
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `'foo'` must not be equal to `'foo'`
+    >>> neq(42, 42)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `42` must not be equal to `42`
+    >>> neq(-123.45, 0)
     """
     if test.eq(first, second):
-        raise ValidationError(first, f"not be equal to '{second}'")
+        raise ValidationError(first, f"not be equal to `{repr(second)}`")
 
 
 def gt(first: int | float, second: int | float) -> None:
@@ -446,9 +463,19 @@ def gt(first: int | float, second: int | float) -> None:
     :raises ValidationError: Raised if the value isn't greater than a second value.
 
     :rtype: None
+
+    >>> gt(42, 0)
+    >>> gt(0, 0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `0` must be greater than `0`
+    >>> gt(-123.45, 0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `-123.45` must be greater than `0`
     """
     if not test.gt(first, second):
-        raise ValidationError(first, f"be greater than '{second}'")
+        raise ValidationError(first, f"be greater than `{second}`")
 
 
 def lt(first: int | float, second: int | float) -> None:
@@ -460,9 +487,19 @@ def lt(first: int | float, second: int | float) -> None:
     :raises ValidationError: Raised if the value isn't less than a second value.
 
     :rtype: None
+
+    >>> lt(42, 0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `42` must be less than `0`
+    >>> lt(0, 0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `0` must be less than `0`
+    >>> lt(-123.45, 0)
     """
     if not test.lt(first, second):
-        raise ValidationError(first, f"be less than '{second}'")
+        raise ValidationError(first, f"be less than `{second}`")
 
 
 def gte(first: int | float, second: int | float) -> None:
@@ -474,9 +511,16 @@ def gte(first: int | float, second: int | float) -> None:
     :raises ValidationError: Raised if the value isn't greater than or equal to a second value.
 
     :rtype: None
+
+    >>> gte(42, 0)
+    >>> gte(0, 0)
+    >>> gte(-123.45, 0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `-123.45` must be greater than or equal to `0`
     """
     if not test.gte(first, second):
-        raise ValidationError(first, f"be greater than or equal to '{second}'")
+        raise ValidationError(first, f"be greater than or equal to `{second}`")
 
 
 def lte(first: int | float, second: int | float) -> None:
@@ -488,6 +532,13 @@ def lte(first: int | float, second: int | float) -> None:
     :raises ValidationError: Raised if the value isn't less than or equal to a second value.
 
     :rtype: None
+
+    >>> lte(42, 0)
+    Traceback (most recent call last):
+        ...
+    validate.ValidationError: Value `42` must be less than or equal to `0`
+    >>> lte(0, 0)
+    >>> lte(-123.45, 0)
     """
     if not test.lte(first, second):
-        raise ValidationError(first, f"be less than or equal to '{second}'")
+        raise ValidationError(first, f"be less than or equal to `{second}`")
