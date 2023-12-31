@@ -11,8 +11,6 @@
 
 __version__ = "1.1.6"
 
-# TODO: Move to pytest
-# TODO: phmdoctest / phmutest, reformat readmes to not use REPL
 # TODO: is_in
 
 from typing import Any
