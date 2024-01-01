@@ -4,7 +4,6 @@
 [![PyPI Version](https://img.shields.io/pypi/v/onecondition?logo=PyPI&logoColor=white)](https://pypi.org/project/onecondition/)
 
 [![GitHub Build](https://img.shields.io/github/actions/workflow/status/nimaid/python-onecondition/master.yml?logo=GitHub)](https://github.com/nimaid/python-onecondition/actions/workflows/master.yml)
-[![Coveralls Coverage](https://img.shields.io/coverallsCoverage/github/nimaid/python-onecondition?logo=coveralls)](https://coveralls.io/github/nimaid/python-onecondition)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/nimaid/python-onecondition?logo=codecov&logoColor=white)](https://codecov.io/gh/nimaid/python-onecondition)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6016e7276903495c9d4a6f0dc89d2904)](https://app.codacy.com/gh/nimaid/python-onecondition/dashboard)
 
