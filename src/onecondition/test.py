@@ -1,47 +1,64 @@
-"""Contains methods to test various conditions about 1 or more values.
-
-:Example:
-    >>> none(None)
-    True
-
-    >>> class TestError(ValueError):
-    ...     def __init__(self, message):
-    ...         super().__init__(message)
-    >>> test_error = TestError("Test")
-    >>> specific_type(test_error, ValueError)
-    False
-    >>> instance(test_error, ValueError)
-    True
-
-    >>> zero(0)
-    True
-    >>> positive(0)
-    False
-    >>> negative(0)
-    False
-
-    >>> range_inclusive(0, 0, 1)
-    True
-    >>> range_non_inclusive(0, 0, 1)
-    False
-
-    >>> eq("foo", "foo")
-    True
-    >>> eq(42, -123.45)
-    False
-
-    >>> gt(4, 2)
-    True
-    >>> lt(4, 2)
-    False
-
-    >>> gte(0, 0)
-    True
-    >>> lte(0, 0)
-    True
-"""
+"""Contains methods to test various conditions about 1 or more values."""
 from types import UnionType
-from typing import Any
+from typing import Any, Sequence
+
+
+def true(value: Any) -> bool:
+    """Test if a value is pythonically True.
+
+    :param Any value: The value to test.
+
+    :return: The result of the evaluation.
+    :rtype: bool
+
+    :Example:
+        >>> true(True)
+        True
+        >>> true(False)
+        False
+        >>> true(None)
+        False
+        >>> true(0)
+        False
+        >>> true(1)
+        True
+        >>> true("")
+        False
+        >>> true("foobar")
+        True
+    """
+    if value:
+        return True
+
+    return False
+
+
+def false(value: Any) -> bool:
+    """Test if a value is pythonically False.
+
+    :param Any value: The value to test.
+
+    :return: The result of the evaluation.
+    :rtype: bool
+
+    :Example:
+        >>> false(True)
+        False
+        >>> false(False)
+        True
+        >>> false(0)
+        True
+        >>> false(1)
+        False
+        >>> false("")
+        True
+        >>> false("foobar")
+        False
+    """
+    if value:
+        return False
+
+    return True
 
 
 def none(value: Any) -> bool:

@@ -9,11 +9,11 @@
     onecondition.ValidationError: Value `0` must be between 0 and 1 (non-inclusive)
 """
 
-__version__ = "1.1.14"
+__version__ = "1.1.15"
 
 __all__ = ["ValidationError", "validate", "test"]
 
-# TODO: is_in
+# TODO: is_in(value: Any, sequence: Sequence[Any])
 
 from typing import Any
 
@@ -43,4 +43,3 @@ class ValidationError(ValueError):
             value_repr=repr(value),
             condition=condition)
         super().__init__(message)
-

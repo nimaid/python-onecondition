@@ -1,41 +1,73 @@
-"""Contains methods to validate various conditions about 1 or more values.
-
-:Example:
-    >>> none(None)
-    >>> not_none("")
-
-    >>> class TestError(ValueError):
-    ...     def __init__(self, message):
-    ...         super().__init__(message)
-    >>> test_error = TestError("Test")
-    >>> specific_type(test_error, TestError)
-    >>> instance(test_error, ValueError)
-    >>> not_specific_type(test_error, ValueError)
-    >>> not_instance(test_error, TypeError)
-
-    >>> zero(0)
-    >>> not_zero(42)
-    >>> positive(42)
-    >>> not_positive(0)
-    >>> negative(-123.45)
-    >>> not_negative(0)
-
-    >>> range_inclusive(0, 0, 1)
-    >>> not_range_inclusive(2, 0, 1)
-    >>> range_non_inclusive(0.5, 0, 1)
-    >>> not_range_non_inclusive(0, 0, 1)
-
-    >>> eq(42, 42)
-    >>> neq(42, -123.45)
-    >>> gt(42, -123.45)
-    >>> lt(-123.45, 42)
-    >>> gte(0, 0)
-    >>> lte(0, 0)
-"""
+"""Contains methods to validate various conditions about 1 or more values."""
 from types import UnionType
 from typing import Any
 
 from onecondition import ValidationError, test
+
+
+def true(value: Any) -> None:
+    """Validate that a value is pythonically True, and if it isn't, raise an exception.
+
+    :param Any value: The value to test.
+
+    :raises ValidationError: Raised if the value is not pythonically True.
+
+    :rtype: None
+
+    :Example:
+        >>> true(True)
+        >>> true(False)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `False` must be (pythonically) True
+        >>> true(None)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `None` must be (pythonically) True
+        >>> true(0)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `0` must be (pythonically) True
+        >>> true(1)
+        >>> true("")
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `''` must be (pythonically) True
+        >>> true("foobar")
+    """
+    if not test.true(value):
+        raise ValidationError(value, "be (pythonically) True")
+
+
+def false(value: Any) -> None:
+    """Validate that a value is pythonically False, and if it isn't, raise an exception.
+
+    :param Any value: The value to test.
+
+    :raises ValidationError: Raised if the value is not pythonically False.
+
+    :rtype: None
+
+    :Example:
+        >>> false(True)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `True` must be (pythonically) False
+        >>> false(False)
+        >>> false(None)
+        >>> false(0)
+        >>> false(1)
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `1` must be (pythonically) False
+        >>> false("")
+        >>> false("foobar")
+        Traceback (most recent call last):
+            ...
+        onecondition.ValidationError: Value `'foobar'` must be (pythonically) False
+    """
+    if not test.false(value):
+        raise ValidationError(value, "be (pythonically) False")
 
 
 def none(value: Any) -> None:
